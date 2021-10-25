@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-# Hacker-Webbrowser v1.0
+# black-Webbrowser v1.0
 from datetime import date, datetime
 import webbrowser
 import subprocess
 import logging
 import platform
 import os
-
+import sys
 try:
     import requests
 except ImportError:
@@ -55,14 +55,14 @@ try:
 except (ImportError,ModuleNotFoundError):
     os.system("pip install deep_translator")
 
-class Hacker_webbrowser(Tk):
+class black_webbrowser(Tk):
     def __init__(self):
-        super(Hacker_webbrowser,self).__init__()
-        self.title('Hacker Webbrowser')
+        super(black_webbrowser,self).__init__()
         self.time_zone = datetime.now()
+        self.title('Black Webbrowser')
         self.ch = StringVar()
         self.photo = PhotoImage(file = './Scr/black.png')
-        self.iconphoto(False,self.photo)
+        self.iconphoto(False    ,self.photo)
     def main(self):
         global cmenu,label_s,x,next_list,back_list
         x = 1
@@ -71,10 +71,10 @@ class Hacker_webbrowser(Tk):
         # self.style = Style('journal')
         # self = self.style.master
         self.style = Style("darkly")
-        # self.style = ThemedStyle(theme="Hacker")
+        # self.style = ThemedStyle(theme="black")
         self.f = Notebook(self)
         self.main_tab = Frame(self.f)
-        self.f.add(self.main_tab,text='Hacker')
+        self.f.add(self.main_tab,text='black')
         self.f.pack(fill='both',expand=True)
         self.end = "\033[0m"
         self.check_tab = False
@@ -88,14 +88,14 @@ class Hacker_webbrowser(Tk):
  ▒ ░▒░ ░  ▒   ▒▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ░  ░  ░▒ ░ ▒░     ▒ ░ ░   ░ ░  ░▒░▒   ░ ▒░▒   ░   ░▒ ░ ▒░  ░ ▒ ▒░   ▒ ░ ░  ░ ░▒  ░ ░ ░ ░  ░  ░▒ ░ ▒░
  ░  ░░ ░  ░   ▒   ░        ░ ░░ ░    ░     ░░   ░ 
 {self.end}"""
-        self.label_st = Label(self,text='Hacker Webbrowser',bg='gray',fg='black')
+        self.label_st = Label(self,text='black Webbrowser',bg='gray',fg='black')
         self.label_st.pack(side = BOTTOM)
         self.back_b = Button(self.main_tab,text='Back',command=self.back_link)
         self.back_b.place(bordermode=OUTSIDE,x=10,y=5)
         self.next_b = Button(self.main_tab,text='Next',command=self.next_link)
         self.next_b.place(bordermode=OUTSIDE,x=50,y=5)
-        # self.label_s = Label(text='Search:',bg='gray',fg='Hacker',font=("None",10))
-        # self.label_s.pack()Hacker
+        # self.label_s = Label(text='Search:',bg='gray',fg='black',font=("None",10))
+        # self.label_s.pack()black
         # self.label_s.place(bordermode=INSIDE,x=200,y=70)
         self.link_s = Entry(master=self,width=85,borderwidth=5)
         self.link_s.pack(padx=10,pady=10,fill='x')
@@ -115,11 +115,11 @@ class Hacker_webbrowser(Tk):
         toolmenu = Menu(menu,tearoff=0)
         background_m = Menu(menu,tearoff=0)
         clearfile = Menu(menu,tearoff=0)
-        Hackerfile = Menu(menu,tearoff=0)
+        blackfile = Menu(menu,tearoff=0)
         donatefile = Menu(menu,tearoff=0)
         helpmenu = Menu(menu,tearoff=0)
         shell_m = Menu(menu,tearoff=0)
-        filemenu.add_command(label='Hacker',accelerator='F1',command=self.Hacker)
+        filemenu.add_command(label='black',accelerator='F1',command=self.black)
         filemenu.add_command(label='Help',accelerator='F2',command=self.help)
         filemenu.add_command(label='Dev',accelerator='F3',command=self.dev)
         filemenu.add_command(label='Social Network',command=self.social)
@@ -142,15 +142,15 @@ class Hacker_webbrowser(Tk):
         # menu.add_cascade(label='Tab',menu=tabfile)
         searchfile.add_command(label='history',command=self.history)
         reconfile.add_command(label='Recon',command=self.recon)
-        reconfile.add_command(label='Wget',command=self.Hacker_wget)
+        reconfile.add_command(label='Wget',command=self.black_wget)
         reconfile.add_command(label='Request',command=self.request_web)
         toolmenu.add_command(label='Tools',command=self.tools)
         toolmenu.add_command(label='Github',command=self.github_dev)
         toolmenu.add_command(label='Website',command=self.website)
         background_m.add_command(label='Background') # command=self.background
         shell_m.add_command(label='Shell',command=self.shell)
-        Hackerfile.add_command(label='Black',accelerator='F1',command=self.Hacker)
-        Hackerfile.add_command(label='Hacker Translate',command=self.Hacker_translate)
+        blackfile.add_command(label='Black',accelerator='F1',command=self.black)
+        blackfile.add_command(label='black Translate',command=self.black_translate)
         clearfile.add_command(label='Clear',command=self.clear_input)
         donatefile.add_command(label='donate',accelerator='F5',command=self.donate)
         helpmenu.add_command(label='Help',command=self.help)
@@ -163,7 +163,7 @@ class Hacker_webbrowser(Tk):
         menu.add_cascade(label='Tools',menu=toolmenu)
         menu.add_cascade(label='Background',menu=background_m)
         menu.add_cascade(label='Shell',menu=shell_m)
-        menu.add_cascade(label='Hacker',menu=Hackerfile)
+        menu.add_cascade(label='black',menu=blackfile)
         menu.add_cascade(label='Clear',menu=clearfile)
         menu.add_cascade(label='Donate',menu=donatefile)
         menu.add_cascade(label='Help',menu=helpmenu)
@@ -199,10 +199,10 @@ class Hacker_webbrowser(Tk):
            self.search_2(back_list[-1])
         except Exception:
             self.check_tab_main = False
-    def Hacker_wget(self):
+    def black_wget(self):
         global window9,link_6,txt   
         window9 = Tk()
-        window9.title('Hacker-Webbrowser/Wget')
+        window9.title('black-Webbrowser/Wget')
         label_link = TLabel(window9,text='Link:',background='white',foreground='black')
         label_link.place(bordermode=OUTSIDE,x=160,y=20)
         link_6 = Entry(window9,borderwidth=3)
@@ -260,7 +260,7 @@ class Hacker_webbrowser(Tk):
     def back_link(self):
         return
     def dark(self):
-        self.config(bg='Hacker')
+        self.config(bg='black')
         self.label_s.config(bg='black',fg='green')
         self.link_s.config(bg='black',fg='green')
         self.search_b.config(bg='black',fg='green')
@@ -307,7 +307,7 @@ class Hacker_webbrowser(Tk):
         print("{99}.Exit")
         try:
             while True:
-                command = input("\nHacker-Browser ~# ").split()
+                command = input("\nblack-Browser ~# ").split()
                 if command == []:
                     pass
                 elif command[0] == '1':
@@ -334,11 +334,11 @@ class Hacker_webbrowser(Tk):
             quit()
     def title_shell(self):
         if platform.system() == 'Linux':
-            os.system("printf '\033]2;Hacker-Webbrowser/Shell\a'")
+            os.system("printf '\033]2;black-Webbrowser/Shell\a'")
         else:
-            os.system("title Hacker-Webbrowser/Shell")
+            os.system("title black-Webbrowser/Shell")
     def ext6(self):
-        print(f"\nExiting Hacker-Software At: {self.time_zone}\n")
+        print(f"\nExiting black-Software At: {self.time_zone}\n")
         quit()
     def social(self):
         window_social = Tk()
@@ -350,7 +350,7 @@ class Hacker_webbrowser(Tk):
         window_social.mainloop()
     def about(self):
         window_help = Tk()
-        window_help.title('Hacker-Webbrowser/About')
+        window_help.title('black-Webbrowser/About')
         window_help.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_help)
         frame_dev.load_website('https://black-software.ir/about/')
@@ -363,7 +363,7 @@ class Hacker_webbrowser(Tk):
         self.try_again_2()
     def website(self):
         window_help = Tk()
-        window_help.title('Hacker Webbrowser')
+        window_help.title('black Webbrowser')
         window_help.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_help)
         frame_dev.load_website('https://black-software.ir')
@@ -371,7 +371,7 @@ class Hacker_webbrowser(Tk):
         window_help.mainloop()
     def github_dev(self):
         window_help = Tk()
-        window_help.title('Hacker Webbrowser')
+        window_help.title('black Webbrowser')
         window_help.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_help)
         frame_dev.load_website('https://github.com/mrprogrammer2938')
@@ -379,7 +379,7 @@ class Hacker_webbrowser(Tk):
         window_help.mainloop()
     def tools(self):
         window_help = Tk()
-        window_help.title('Hacker Webbrowser')
+        window_help.title('black Webbrowser')
         window_help.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_help)
         frame_dev.load_website('https://mrprogrammer2938.github.io/Black-Help')
@@ -393,14 +393,14 @@ class Hacker_webbrowser(Tk):
         window_frame = Tk()
         window_frame.title('Github')
         self.frame = tkinterweb.HtmlFrame(window_frame)
-        self.frame.load_website("https://github.com/Hacker-software-com")
+        self.frame.load_website("https://github.com/black-software-com")
         self.frame.pack(fill='x',expand=True)
         window_frame.geometry("600x500")
         window_frame.mainloop()
     def recon(self):
         global window7,link_5
         window7 = Tk()
-        window7.title('Hacker Webbrowser')
+        window7.title('black Webbrowser')
         window7.geometry("300x300")
         window7.config(background='gray')
         label_host = TLabel(window7,text='Key:',foreground='black',background='gray')
@@ -423,7 +423,7 @@ class Hacker_webbrowser(Tk):
     def history(self):
         global window6,txt
         window6 = Tk()
-        window6.title('Hacker Webbrowser-History')
+        window6.title('black Webbrowser-History')
         menu = Menu(window6)
         filemenu = Menu(menu,tearoff=0)
         filemenu.add_command(label='Clear',command=self.clear_input)
@@ -447,9 +447,9 @@ class Hacker_webbrowser(Tk):
         if self.check_tab == False:
             if self.link_s.get():
                 self.window5 = Tk()
-                self.window5.title('Hacker webbrowser')
+                self.window5.title('black webbrowser')
                 self.window5.geometry("700x500")
-                self.window5.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+                self.window5.bind("<Alt-F3>",lambda x: self.black_3(x))
                 self.f = Notebook(self.window5)
                 self.tab1 = Frame(self.f)
                 self.f.add(self.tab1,text=self.link_s.get())
@@ -457,7 +457,7 @@ class Hacker_webbrowser(Tk):
                 self.check_tab = True
                 menu = Menu(self.window5)
                 filemenu = Menu(menu,tearoff=0)
-                filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.Hacker_2)
+                filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.black_2)
                 filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
                 menu.add_cascade(label='Option',menu=filemenu)
                 self.window5.config(menu=menu)
@@ -486,7 +486,7 @@ class Hacker_webbrowser(Tk):
         # if self.check_tab == False:
         if self.link_s.get():
           if self.check_search_tab == False:
-            self.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+            self.bind("<Alt-F3>",lambda x: self.black_3(x))
             try:
                 self.frame = tkinterweb.HtmlFrame(self.main_tab)
                 self.frame.load_website(self.link_s.get())
@@ -504,7 +504,7 @@ class Hacker_webbrowser(Tk):
                     print(False)
             # self.window5.mainloop()
           else:
-                    self.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+                    self.bind("<Alt-F3>",lambda x: self.black_3(x))
                     # self.f = Notebook(self)
                     self.check_tab = True
                     try:
@@ -536,9 +536,9 @@ class Hacker_webbrowser(Tk):
         if self.check_tab == False:
             if self.link_s.get():
                 self.window5 = Tk()
-                self.window5.title('Hacker webbrowser')
+                self.window5.title('black webbrowser')
                 self.window5.geometry("700x500")
-                self.window5.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+                self.window5.bind("<Alt-F3>",lambda x: self.black_3(x))
                 self.f = Notebook(self.window5)
                 self.tab1 = Frame(self.f)
                 self.f.add(self.tab1,text=self.link_s.get())
@@ -546,7 +546,7 @@ class Hacker_webbrowser(Tk):
                 self.check_tab = True
                 menu = Menu(self.window5)
                 filemenu = Menu(menu,tearoff=0)
-                filemenu.add_command(label='Hacker',accelerator='Alt+F3',command=self.Hacker_2)
+                filemenu.add_command(label='black',accelerator='Alt+F3',command=self.black_2)
                 filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
                 menu.add_cascade(label='Option',menu=filemenu)
                 self.window5.config(menu=menu)
@@ -580,17 +580,17 @@ class Hacker_webbrowser(Tk):
     def ext7(self):
         self.window5.destroy()
         self.window5.quit()
-    def Hacker_translate(self):
+    def black_translate(self):
         global txt_word_tr,word,source,target,window_translate
         window_translate = Tk()
         # window_translate = Tk()
         # window_translate = Tk()
-        window_translate.title('Hacker Translate')
+        window_translate.title('black Translate')
         # style_window_tr = Style("superhero")
         # window_translate = style_window_tr.master
         menu = Menu(window_translate)
         aboutfile = Menu(window_translate,tearoff=0)
-        aboutfile.add_command(label='Hacker',command=self.Hacker)
+        aboutfile.add_command(label='black',command=self.black)
         aboutfile.add_command(label='Dev',command=self.dev)
         aboutfile.add_separator()
         aboutfile.add_command(label='Close',accelerator='Ctrl+F4',command=self.ext8)
@@ -627,7 +627,7 @@ class Hacker_webbrowser(Tk):
         target.delete(0,END)
     def search_7(self):
         window10 = Tk()
-        window10.title('Hacker-Webbrowser/black-Software')
+        window10.title('black-Webbrowser/black-Software')
         self.frame_3 = tkinterweb.HtmlFrame(window10)
         self.frame_3.load_website('https://black-software.ir')
         self.frame_3.pack(fill='both',expand=True)
@@ -657,7 +657,7 @@ class Hacker_webbrowser(Tk):
     def close_tab(self):
         self.tab1.destroy()
     def speed_internet(self):
-        sp = Speedtest()
+        sp = Speedtest() 
         if platform.system() == 'Windows':
             try:
                command = subprocess.getoutput("Netsh int tcp show global");print(command)
@@ -680,7 +680,7 @@ class Hacker_webbrowser(Tk):
     def google(self):
         global window2,link_3
         window2 = Tk()
-        window2.title('Hacker-Webbrowser/Find-')
+        window2.title('black-Webbrowser/Find-')
         window2.resizable(False,False)
         window2.geometry("250x300")
         label_l = Label(window2,text='Search:',bg='gray',fg='black')
@@ -697,7 +697,7 @@ class Hacker_webbrowser(Tk):
     def bing(self):
         global window3,link_4
         window3 = Tk()
-        window3.title('Hacker-Webbrowser/Find-Bing')
+        window3.title('black-Webbrowser/Find-Bing')
         window3.resizable(False,False)
         window3.geometry("250x300")
         label_l = Label(window3,text='Search:',bg='gray',fg='black')
@@ -719,7 +719,7 @@ class Hacker_webbrowser(Tk):
     def find(self):
         global window,link_2
         window = Tk()
-        window.title('Hacker-Webbrowser/Find')
+        window.title('black-Webbrowser/Find')
         window.resizable(False,False)
         window.geometry("250x300")
         label_l = Label(window,text='Search:',bg='gray',fg='black')
@@ -744,9 +744,9 @@ class Hacker_webbrowser(Tk):
     def search_2(self):
         if link_2.get():
             self.window13 = Tk()
-            self.window13.title('Hacker webbrowser')
+            self.window13.title('black webbrowser')
             self.window13.geometry("700x500")
-            self.window13.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+            self.window13.bind("<Alt-F3>",lambda x: self.black_3(x))
             self.f = Notebook(self.window13)
             self.tab1 = Frame(self.f)
             self.f.add(self.tab1,text=link_2.get())
@@ -754,7 +754,7 @@ class Hacker_webbrowser(Tk):
             self.check_tab = True
             menu = Menu(self.window13)
             filemenu = Menu(menu,tearoff=0)
-            filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.Hacker_2)
+            filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.black_2)
             filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
             menu.add_cascade(label='Option',menu=filemenu)
             self.window13.config(menu=menu)
@@ -772,9 +772,9 @@ class Hacker_webbrowser(Tk):
     def search_8(self,x):
         if link_2.get():
             self.window13 = Tk()
-            self.window13.title('Hacker webbrowser')
+            self.window13.title('black webbrowser')
             self.window13.geometry("700x500")
-            self.window13.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+            self.window13.bind("<Alt-F3>",lambda x: self.black_3(x))
             self.f = Notebook(self.window13)
             self.tab1 = Frame(self.f)
             self.f.add(self.tab1,text=link_2.get())
@@ -782,7 +782,7 @@ class Hacker_webbrowser(Tk):
             self.check_tab = True
             menu = Menu(self.window13)
             filemenu = Menu(menu,tearoff=0)
-            filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.Hacker_2)
+            filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.black_2)
             filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
             menu.add_cascade(label='Option',menu=filemenu)
             self.window13.config(menu=menu)
@@ -809,17 +809,17 @@ class Hacker_webbrowser(Tk):
         self.link_s.event_generate(("<<Reload>>"))
     def delete_text(self):
         self.link_s.event_generate(("<<delete>>"))
-    def Hacker(self,event=None):
-        window_Hacker = Tk()
-        window_Hacker.title('Hacker Webbrowser')
-        window_Hacker.geometry("600x500")
-        frame_dev = tkinterweb.HtmlFrame(window_Hacker)
+    def black(self,event=None):
+        window_black = Tk()
+        window_black.title('black Webbrowser')
+        window_black.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_black)
         frame_dev.load_website('https://black-software.ir')
         frame_dev.pack(fill='both',expand=True)
-        window_Hacker.mainloop()
+        window_black.mainloop()
     def help(self):
         window_help = Tk()
-        window_help.title('Hacker Webbrowser')
+        window_help.title('black Webbrowser')
         window_help.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_help)
         frame_dev.load_website('https://github.com/black-software-com/black-help')
@@ -827,7 +827,7 @@ class Hacker_webbrowser(Tk):
         window_help.mainloop()
     def dev(self):
         window_dev = Tk()
-        window_dev.title('Hacker Webbrowser')
+        window_dev.title('black Webbrowser')
         window_dev.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_dev)
         frame_dev.load_website('https://github.com/mrprogrammer2938')
@@ -851,9 +851,9 @@ class Hacker_webbrowser(Tk):
     @staticmethod
     def title_b():
         if platform.system() == 'Linux':
-            os.system("printf '\033]2;Hacker-Webbrowser\a'")
+            os.system("printf '\033]2;black-Webbrowser\a'")
         else:
-            os.system("title Hacker-Webbrowser")
+            os.system("title black-Webbrowser")
     def try_again(self):
         try1 = input("\nDo You Want To Try again? [y/n] ")
         if try1.lower() == 'y' or try1.lower() == 'yes':
@@ -865,7 +865,7 @@ class Hacker_webbrowser(Tk):
     def request_web(self):
         global window11,link_7
         window11 = Tk()
-        window11.title('Hacker Webbrowser')
+        window11.title('black Webbrowser')
         window11.geometry("300x300")
         window11.config(background='gray')
         label_host = TLabel(window11,text='URL:',foreground='black',background='gray')
@@ -901,31 +901,74 @@ class Hacker_webbrowser(Tk):
             self.try_again_3()
     def donate(self,event=None):
         window_help = Tk()
-        window_help.title('Hacker Webbrowser')
+        window_help.title('black Webbrowser')
         window_help.geometry("600x500")
         frame_dev = tkinterweb.HtmlFrame(window_help)
         frame_dev.load_website('https://idpay.ir/mrprogrammer2938')
         frame_dev.pack(fill='both',expand=True)
         window_help.mainloop()
+class argument(object):
+      def arg(self):
+          global window_arg,url
+          try:
+             if sys.argv[1] == sys.argv[1]:
+                url = str(sys.argv[1])
+                try:
+                    window_arg = Tk()
+                    window_arg.title('black Webbrowser')
+                    try:
+                        frame_arg = tkinterweb.HtmlFrame(window_arg)
+                        frame_arg.load_website(url)
+                        frame_arg.pack(fill='both',expand=True)
+                    except (Exception,):
+                        print(False)
+                    window_arg.geometry("600x500")
+                    window_arg.mainloop()
+                except (Exception,):
+                    showerror(title='Cannot Running',message='Cannot Running black Webbrowser!')
+                    print(False)
+             else:
+                 try:
+                    r = requests.get('https://google.com')
+                    if r.status_code == 200:
+                        if platform.system() == 'Linux':
+                            if os.getuid() == 0:
+                                window = black_webbrowser()
+                                window.title_b()
+                                window.cls()
+                                print(window.time_zone)
+                                window.main()
+                            else:
+                                showerror(title='Cannot Running',message='Please, Check Root!')
+                                print(False)
+                        else:
+                            window = black_webbrowser()
+                            window.title_b()
+                            window.cls()
+                            print(window.time_zone)
+                            window.main()
+                 except (requests.ConnectTimeout,requests.exceptions.ConnectionError,Exception,):
+                     showwarning(title='Cannot Connecting',message='Please, check Internet')
+                     print(False)
+          except (Exception,IndexError):
+              window = black_webbrowser()
+              window.title_b()
+              window.cls()
+              print(window.time_zone)
+              window.main()
 if __name__ == '__main__':
     try:
         r = requests.get('https://google.com')
         if r.status_code == 200:
              if platform.system() == 'Linux':
                if os.getuid() == 0:
-                  window = Hacker_webbrowser()
-                  window.title_b()
-                  window.cls()
-                  print(window.time_zone)
-                  window.main()
+                  arg = argument()
+                  arg.arg()
                else:
-                   showerror(title='Cannot Running',message='Please, Run Hacker Webbrowser as self!')
+                   showerror(title='Cannot Running',message='Please, Run black Webbrowser as self!')
              else:
-                  window = Hacker_webbrowser()
-                  window.title_b()
-                  window.cls()
-                  print(window.time_zone)
-                  window.main()
-    except requests.ConnectTimeout:
+                  arg = argument()
+                  arg.arg()
+    except (requests.ConnectTimeout,requests.exceptions.ConnectionError,Exception,):
         showwarning(title='Cannot Connecting',message='Please, check Internet')
         print(False)
