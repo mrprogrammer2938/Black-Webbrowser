@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Black-Webbrowser v1.0
+# black-Webbrowser v1.5
 import os,subprocess,platform
 try:
     from tkinter import *
@@ -7,7 +7,7 @@ try:
     from tkinter.messagebox import showerror
     from ttkbootstrap import Style
 except ImportError:
-    subprocess.getoutput("pip uninstall tk-tools")
+    subprocess.getoutput("pip install tk-tools")
 
 class black_webbrowser(Tk):
     def __init__(self):
@@ -33,7 +33,7 @@ class black_webbrowser(Tk):
         pr.start(55)
         pr.after(6000,self.uninstall_2)
     def uninstall_2(self):
-        subprocess.getoutput("cd .. && rm -r Black-Webbrowser")
+        subprocess.getoutput("cd .. && rm -r black-Webbrowser")
         pr.stop()
         pr.destroy()
         label_mess = Label(self,text='Complete!',foreground='black',background='white')
