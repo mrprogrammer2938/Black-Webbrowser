@@ -1,0 +1,931 @@
+#!/usr/bin/python3
+# Hacker-Webbrowser v1.0
+from datetime import date, datetime
+import webbrowser
+import subprocess
+import logging
+import platform
+import os
+
+try:
+    import requests
+except ImportError:
+    os.system("pip install requests")
+try:
+    from tkinter import *
+    from tkinter.ttk import Label as TLabel,Button as TButton,Notebook,Labelframe,Separator
+    from tkinter.colorchooser import askcolor
+    from tkinter import filedialog
+    from tkinter.messagebox import showwarning,showinfo,showerror
+    from tkhtmlview import HTMLLabel
+except ImportError:
+    os.system("pip install tk-tools")
+try:
+    import tkinterweb
+except ImportError:
+    os.system("pip install tkinterweb")
+try:
+    from googlesearch import search
+except ImportError:
+    os.system("pip install googlesearch-python")
+try:
+    from ttkbootstrap import Style
+except (ImportError,ModuleNotFoundError):
+   os.system("pip install ttkbootstrap")
+try:
+    from ttkthemes import *
+except ImportError:
+    os.system("pip install ttkthemes")
+try:
+    from speedtest import Speedtest
+except ImportError:
+    os.system("pip install speedtest-cli")
+try:
+    from colorama import Fore,init
+    init()
+except (ImportError,ModuleNotFoundError):
+    os.system("pip install colorama")
+try:
+    import wget
+    from wget import download
+except (ImportError,ModuleNotFoundError):
+    os.system("pip install wget")
+try:
+    from deep_translator import GoogleTranslator
+except (ImportError,ModuleNotFoundError):
+    os.system("pip install deep_translator")
+
+class Hacker_webbrowser(Tk):
+    def __init__(self):
+        super(Hacker_webbrowser,self).__init__()
+        self.title('Hacker Webbrowser')
+        self.time_zone = datetime.now()
+        self.ch = StringVar()
+        self.photo = PhotoImage(file = './Scr/black.png')
+        self.iconphoto(False,self.photo)
+    def main(self):
+        global cmenu,label_s,x,next_list,back_list
+        x = 1
+        next_list = []
+        back_list = []
+        # self.style = Style('journal')
+        # self = self.style.master
+        self.style = Style("darkly")
+        # self.style = ThemedStyle(theme="Hacker")
+        self.f = Notebook(self)
+        self.main_tab = Frame(self.f)
+        self.f.add(self.main_tab,text='Hacker')
+        self.f.pack(fill='both',expand=True)
+        self.end = "\033[0m"
+        self.check_tab = False
+        self.banner = f"""{Fore.GREEN}
+ ██░ ██  ▄▄▄       ▄████▄   ██ ▄█▀▓█████  ██▀███      █     █░▓█████  ▄▄▄▄    ▄▄▄▄    ██▀███   ▒█████   █     █░  ██████ ▓█████  ██▀███   {Fore.RED} v2.0 {Fore.GREEN}
+▓██░ ██▒▒████▄    ▒██▀ ▀█   ██▄█▒ ▓█   ▀ ▓██ ▒ ██▒   ▓█░ █ ░█░▓█   ▀ ▓█████▄ ▓█████▄ ▓██ ▒ ██▒▒██▒  ██▒▓█░ █ ░█░▒██    ▒ ▓█   ▀ ▓██ ▒ ██▒
+▒██▀▀██░▒██  ▀█▄  ▒▓█    ▄ ▓███▄░ ▒███   ▓██ ░▄█ ▒   ▒█░ █ ░█ ▒███   ▒██▒ ▄██▒██▒ ▄██▓██ ░▄█ ▒▒██░  ██▒▒█░ █ ░█ ░ ▓██▄   ▒███   ▓██ ░▄█ ▒
+░▓█ ░██ ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓██ █▄ ▒▓█  ▄ ▒██▀▀█▄     ░█░ █ ░█ ▒▓█  ▄ ▒██░█▀  ▒██░█▀  ▒██▀▀█▄  ▒██   ██░░█░ █ ░█   ▒   ██▒▒▓█  ▄ ▒██▀▀█▄  
+░▓█▒░██▓ ▓█   ▓██▒▒ ▓███▀ ░▒██▒ █▄░▒████▒░██▓ ▒██▒   ░░██▒██▓ ░▒████▒░▓█  ▀█▓░▓█  ▀█▓░██▓ ▒██▒░ ████▓▒░░░██▒██▓ ▒██████▒▒░▒████▒░██▓ ▒██▒
+ ▒ ░░▒░▒ ▒▒   ▓▒█░░ ░▒ ▒  ░▒ ▒▒ ▓▒░░ ▒░ ░░ ▒▓ ░▒▓░   ░ ▓░▒ ▒  ░░ ▒░ ░░▒▓███▀▒░▒▓███▀▒░ ▒▓ ░▒▓░░ ▒░▒░▒░ ░ ▓░▒ ▒  ▒ ▒▓▒ ▒ ░░░ ▒░ ░░ ▒▓ ░▒▓░
+ ▒ ░▒░ ░  ▒   ▒▒ ░  ░  ▒   ░ ░▒ ▒░ ░ ░  ░  ░▒ ░ ▒░     ▒ ░ ░   ░ ░  ░▒░▒   ░ ▒░▒   ░   ░▒ ░ ▒░  ░ ▒ ▒░   ▒ ░ ░  ░ ░▒  ░ ░ ░ ░  ░  ░▒ ░ ▒░
+ ░  ░░ ░  ░   ▒   ░        ░ ░░ ░    ░     ░░   ░ 
+{self.end}"""
+        self.label_st = Label(self,text='Hacker Webbrowser',bg='gray',fg='black')
+        self.label_st.pack(side = BOTTOM)
+        self.back_b = Button(self.main_tab,text='Back',command=self.back_link)
+        self.back_b.place(bordermode=OUTSIDE,x=10,y=5)
+        self.next_b = Button(self.main_tab,text='Next',command=self.next_link)
+        self.next_b.place(bordermode=OUTSIDE,x=50,y=5)
+        # self.label_s = Label(text='Search:',bg='gray',fg='Hacker',font=("None",10))
+        # self.label_s.pack()Hacker
+        # self.label_s.place(bordermode=INSIDE,x=200,y=70)
+        self.link_s = Entry(master=self,width=85,borderwidth=5)
+        self.link_s.pack(padx=10,pady=10,fill='x')
+        self.link_s.place(bordermode=INSIDE,x=90,y=28)
+        self.sep = Separator(self)
+        self.sep.pack(fill='x')
+        # self.link_s.get()
+        self.check_tab_main = True
+        self.time_zone = datetime.now()
+        menu = Menu(self)
+        filemenu = Menu(menu,tearoff=0)
+        searchfile = Menu(menu,tearoff=0)
+        editfile = Menu(menu,tearoff=0)
+        webfile = Menu(menu,tearoff=0)
+        thememenu = Menu(menu,tearoff=0)
+        reconfile = Menu(menu,tearoff=0)
+        toolmenu = Menu(menu,tearoff=0)
+        background_m = Menu(menu,tearoff=0)
+        clearfile = Menu(menu,tearoff=0)
+        Hackerfile = Menu(menu,tearoff=0)
+        donatefile = Menu(menu,tearoff=0)
+        helpmenu = Menu(menu,tearoff=0)
+        shell_m = Menu(menu,tearoff=0)
+        filemenu.add_command(label='Hacker',accelerator='F1',command=self.Hacker)
+        filemenu.add_command(label='Help',accelerator='F2',command=self.help)
+        filemenu.add_command(label='Dev',accelerator='F3',command=self.dev)
+        filemenu.add_command(label='Social Network',command=self.social)
+        editfile.add_command(label='Cut',accelerator='Ctrl+X',command=self.cut_text)
+        editfile.add_command(label='Copy',accelerator='Ctrl+C',command=self.copy_text)
+        editfile.add_command(label='Paste',accelerator='Ctrl+V',command=self.paste_text)
+        editfile.add_command(label='Delete',command=self.delete_text)
+        webfile.add_command(label='Google',command=self.google)
+        webfile.add_command(label='Bing',command=self.bing)
+        webfile.add_separator()
+        webfile.add_command(label='Find',command=self.find)
+        thememenu.add_radiobutton(label='Dark',command=self.dark,variable=self.ch,value='dark')
+        thememenu.add_radiobutton(label='Gray',command=self.gray,variable=self.ch,value='gray')
+        thememenu.add_radiobutton(label='Light',command=self.light,variable=self.ch,value='light')
+        thememenu.add_separator()
+        thememenu.add_radiobutton(label='Customize',command=self.customize,variable=self.ch,value='customize')
+        # tabfile.add_command(label='Close Tab    ',command=self.close_tab)
+        # tabfile.add_separator()
+        # tabfile.add_command(label='Exit',accelerator='Alt+F4',command=self.ext)
+        # menu.add_cascade(label='Tab',menu=tabfile)
+        searchfile.add_command(label='history',command=self.history)
+        reconfile.add_command(label='Recon',command=self.recon)
+        reconfile.add_command(label='Wget',command=self.Hacker_wget)
+        reconfile.add_command(label='Request',command=self.request_web)
+        toolmenu.add_command(label='Tools',command=self.tools)
+        toolmenu.add_command(label='Github',command=self.github_dev)
+        toolmenu.add_command(label='Website',command=self.website)
+        background_m.add_command(label='Background') # command=self.background
+        shell_m.add_command(label='Shell',command=self.shell)
+        Hackerfile.add_command(label='Black',accelerator='F1',command=self.Hacker)
+        Hackerfile.add_command(label='Hacker Translate',command=self.Hacker_translate)
+        clearfile.add_command(label='Clear',command=self.clear_input)
+        donatefile.add_command(label='donate',accelerator='F5',command=self.donate)
+        helpmenu.add_command(label='Help',command=self.help)
+        menu.add_cascade(label='About',menu=filemenu)
+        menu.add_cascade(label='Search',menu=searchfile)
+        menu.add_cascade(label='Edit',menu=editfile)
+        menu.add_cascade(label='Browser',menu=webfile)
+        menu.add_cascade(label='Theme',menu=thememenu)
+        menu.add_cascade(label='Recon',menu=reconfile)
+        menu.add_cascade(label='Tools',menu=toolmenu)
+        menu.add_cascade(label='Background',menu=background_m)
+        menu.add_cascade(label='Shell',menu=shell_m)
+        menu.add_cascade(label='Hacker',menu=Hackerfile)
+        menu.add_cascade(label='Clear',menu=clearfile)
+        menu.add_cascade(label='Donate',menu=donatefile)
+        menu.add_cascade(label='Help',menu=helpmenu)
+        self.config(menu=menu)
+        # self.search_b = Button(text='Search',command=self.search,width=9,height=3)
+        # self.search_b.place(bordermode=OUTSIDE,x=310,y=105)
+        # self.exit = Button(text='Exit',command=self.ext,width=9,height=3)
+        # self.exit.place(bordermode=OUTSIDE,x=310,y=170)
+        cmenu = Menu(self, tearoff=0)
+        self.check_search_tab = False
+        cmenu.add_command(label='Cut',accelerator='Ctrl+X',command=self.cut_text)
+        cmenu.add_command(label='Copy',accelerator='Ctrl+C',command=self.copy_text)
+        cmenu.add_command(label='Paste',accelerator='Ctrl+V',command=self.paste_text)
+        cmenu.add_command(label='Reload',command=self.reload)
+        cmenu.add_command(label='Delete',command=self.delete_text)
+        cmenu.add_separator()
+        cmenu.add_command(label="Exit",accelerator='Ctrl+F4',command=self.ext)
+        self.bind("<Button-3>", self.context_cmenu)
+        self.bind("<Return>",lambda x: self.search(x))
+        self.bind("<F5>",lambda x: self.donate_2(x))
+        self.geometry("700x600")
+        # self.iconphoto(False,self.photo)
+        self.config(bg='gray10')
+        # self.overrideredirect(True)
+        self.mainloop()
+    def back_link(self):
+        try:
+            self.search_2(next_list[-1])
+        except Exception:
+            self.check_tab_main = False
+    def next_link(self):
+        try:
+           self.search_2(back_list[-1])
+        except Exception:
+            self.check_tab_main = False
+    def Hacker_wget(self):
+        global window9,link_6,txt   
+        window9 = Tk()
+        window9.title('Hacker-Webbrowser/Wget')
+        label_link = TLabel(window9,text='Link:',background='white',foreground='black')
+        label_link.place(bordermode=OUTSIDE,x=160,y=20)
+        link_6 = Entry(window9,borderwidth=3)
+        link_6.place(bordermode=INSIDE,x=200,y=20)
+        self.download_b = TButton(window9,text='Download',command=self.download_url)
+        self.download_b.place(bordermode=OUTSIDE,x=180,y=50)
+        self.exit_b = TButton(window9,text='Exit',command=window9.destroy)
+        self.exit_b.place(bordermode=OUTSIDE,x=260,y=50)
+        txt = Text(window9,width=55,height=18)
+        txt.place(bordermode=OUTSIDE,x=20,y=85)
+        txt['state'] = 'disabled'
+        self.check_b = False
+        menu = Menu(window9)
+        filemenu = Menu(menu,tearoff=0)
+        filemenu.add_command(label='Clear',accelerator='Ctrl+H',command=self.clear_wget_txt)
+        filemenu.add_separator()
+        filemenu.add_command(label='Exit',accelerator='Ctrl+F4',command=window9.destroy)
+        menu.add_cascade(label='Options',menu=filemenu)
+        window9.config(menu=menu)
+        window9.bind("<Control-h>",lambda x: self.clear_wget_txt_2(x))
+        window9.resizable(0,0)
+        window9.geometry("500x400")
+        window9.config(background='white')
+        window9.mainloop()
+    def clear_wget_txt(self):
+        link_6.delete(0,END)
+    def clear_wget_txt_2(self,x):
+        link_6.delete(0,END)
+    def download_url(self):
+        try:
+            download_txt = wget.download(link_6.get())
+            txt['state'] = 'normal'
+            txt.insert(END,download_txt)
+            txt['state'] = 'disabled'
+            if self.check_b == False:
+                self.download_b.destroy()
+                self.exit_b.destroy()
+            else:
+                self.download_b.destroy()
+                self.exit_b.destroy()
+                self.clear_b.destroy()
+            self.download_b = TButton(window9,text='Download',command=self.download_url)
+            self.download_b.place(bordermode=OUTSIDE,x=130,y=50)
+            self.exit_b = TButton(window9,text='Exit',command=window9.destroy)
+            self.exit_b.place(bordermode=OUTSIDE,x=210,y=50)
+            self.clear_b = TButton(window9,text='Clear',command=self.clear_wget_txt)
+            self.clear_b.place(bordermode=OUTSIDE,x=290,y=50)
+            self.check_b == True
+        except ValueError:
+            print(False)
+            txt['state'] = 'normal'
+            txt.insert(END,"Please, Check Link!")
+            txt['state'] = 'disabled'
+            self.check_b == False
+    def back_link(self):
+        return
+    def dark(self):
+        self.config(bg='Hacker')
+        self.label_s.config(bg='black',fg='green')
+        self.link_s.config(bg='black',fg='green')
+        self.search_b.config(bg='black',fg='green')
+        self.exit.config(bg='black',fg='green')
+        self.label_st.config(bg='black',fg='green')
+    def clear_input(self):
+        global txt
+        self.link_s.delete(0,END)
+        file = open("history.txt","w")
+        file.write(" ")
+        file.close()
+        txt.destroy()
+        txt = Text(window6,width=50,height=25)
+        txt.pack()
+        hf_o = open('history.txt','r').readlines()
+        for t in hf_o:
+            txt['state'] = 'normal'
+            txt.insert(END,str(t))
+            txt['state'] = 'disabled'
+    def light(self):
+        self.config(bg='white')
+        self.label_s.config(bg='white',fg='black')
+        self.link_s.config(bg='white')
+        self.search_b.config(bg='white',fg='black')
+        self.exit.config(bg='white',fg='black')
+        self.label_st.config(bg='white',fg='black')
+    def gray(self):
+        self.config(bg='gray')
+        self.label_s.config(bg='gray',fg='black')
+        self.link_s.config(bg='gray')
+        self.search_b.config(bg='gray',fg='black')
+        self.exit.config(bg='gray',fg='black')
+        self.label_st.config(bg='gray',fg='black')
+    def shell(self):
+        self.title_shell()
+        self.cls()
+        print(self.banner)
+        print("{1}.Tools")
+        print("{2}.search")
+        print("{3}.About")
+        print("{4}.Help")
+        print("{5}.Developer")
+        print("{0}.Back")
+        print("{99}.Exit")
+        try:
+            while True:
+                command = input("\nHacker-Browser ~# ").split()
+                if command == []:
+                    pass
+                elif command[0] == '1':
+                    self.tools()
+                elif command[0] == '2':
+                    self.search_shell()
+                elif command[0] == '3':
+                    self.about()
+                elif command[0] == '4':
+                    self.help()
+                elif command[0] == '5':
+                    self.dev()
+                elif command[0] == '0' or command[0].lower() == 'back':
+                    print(f'\nStop At: {self.time_zone}')
+                    break;
+                elif command[0] == '99' or command[0].lower() == 'exit':
+                    self.ext6()
+                else:
+                    self.cls()
+                    print(f"{command} Not Found!")
+                    self.try1()
+        except (KeyboardInterrupt,EOFError):
+            print("Exiting Shell...\n")
+            quit()
+    def title_shell(self):
+        if platform.system() == 'Linux':
+            os.system("printf '\033]2;Hacker-Webbrowser/Shell\a'")
+        else:
+            os.system("title Hacker-Webbrowser/Shell")
+    def ext6(self):
+        print(f"\nExiting Hacker-Software At: {self.time_zone}\n")
+        quit()
+    def social(self):
+        window_social = Tk()
+        window_social.title('Social Network')
+        window_social.resizable(0,0)
+        instagram_b = Button(window_social,text='Github',width=9,height=3,command=self.github)
+        instagram_b.place(bordermode=OUTSIDE,x=215,y=35)
+        window_social.geometry("500x400")
+        window_social.mainloop()
+    def about(self):
+        window_help = Tk()
+        window_help.title('Hacker-Webbrowser/About')
+        window_help.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_help)
+        frame_dev.load_website('https://black-software.ir/about/')
+        frame_dev.pack(fill='both',expand=True)
+        window_help.mainloop()
+    def search_shell(self):
+        self.cls()
+        url = input("Enter URL: ")
+        webbrowser.open_new_tab(url)
+        self.try_again_2()
+    def website(self):
+        window_help = Tk()
+        window_help.title('Hacker Webbrowser')
+        window_help.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_help)
+        frame_dev.load_website('https://black-software.ir')
+        frame_dev.pack(fill='both',expand=True)
+        window_help.mainloop()
+    def github_dev(self):
+        window_help = Tk()
+        window_help.title('Hacker Webbrowser')
+        window_help.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_help)
+        frame_dev.load_website('https://github.com/mrprogrammer2938')
+        frame_dev.pack(fill='both',expand=True)
+        window_help.mainloop()
+    def tools(self):
+        window_help = Tk()
+        window_help.title('Hacker Webbrowser')
+        window_help.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_help)
+        frame_dev.load_website('https://mrprogrammer2938.github.io/Black-Help')
+        frame_dev.pack(fill='both',expand=True)
+        window_help.mainloop()
+    # def background(self):
+    #     file_image = filedialog.askopenfile(title='Select Image')
+    #     label_background = Label(self,image=file_image)
+    #     label_background.pack()
+    def github(self):
+        window_frame = Tk()
+        window_frame.title('Github')
+        self.frame = tkinterweb.HtmlFrame(window_frame)
+        self.frame.load_website("https://github.com/Hacker-software-com")
+        self.frame.pack(fill='x',expand=True)
+        window_frame.geometry("600x500")
+        window_frame.mainloop()
+    def recon(self):
+        global window7,link_5
+        window7 = Tk()
+        window7.title('Hacker Webbrowser')
+        window7.geometry("300x300")
+        window7.config(background='gray')
+        label_host = TLabel(window7,text='Key:',foreground='black',background='gray')
+        label_host.place(bordermode=INSIDE,x=25,y=25)
+        link_5 = Entry(window7,width=25)
+        link_5.place(bordermode=INSIDE,x=80,y=25)
+        scan_b = Button(window7,text='Scan',command=self.scan_recon,width=9,height=3)
+        scan_b.place(bordermode=OUTSIDE,x=120,y=70)
+        exit_b_2 = Button(window7,text='Exit',command=self.ext5,width=9,height=3)
+        exit_b_2.place(bordermode=OUTSIDE,x=120,y=130)
+        window7.mainloop()
+    def scan_recon(self):
+        mylink = []
+        for i in search(link_5.get()):
+            mylink.append(str(i))
+        showinfo(title='Link',message=str(mylink))
+    def ext5(self):
+        window7.destroy()
+        window7.quit()
+    def history(self):
+        global window6,txt
+        window6 = Tk()
+        window6.title('Hacker Webbrowser-History')
+        menu = Menu(window6)
+        filemenu = Menu(menu,tearoff=0)
+        filemenu.add_command(label='Clear',command=self.clear_input)
+        filemenu.add_command(label='Close',accelerator='Ctrl+F4',command=self.close_1)
+        menu.add_cascade(label='Option',menu=filemenu)
+        window6.geometry("500x400")
+        window6.resizable(False,False)
+        window6.config(background='gray',menu=menu)
+        txt = Text(window6,width=50,height=25)
+        txt.pack()
+        txt['state'] = 'disabled'
+        hf_o = open('history.txt','r').readlines()
+        for t in hf_o:
+            txt['state'] = 'normal'
+            txt.insert(END,str(t))
+            txt['state'] = 'disabled'
+        window6.mainloop()
+    def close_1(self):
+        window6.destroy()
+    def search_5(self,x):
+        if self.check_tab == False:
+            if self.link_s.get():
+                self.window5 = Tk()
+                self.window5.title('Hacker webbrowser')
+                self.window5.geometry("700x500")
+                self.window5.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+                self.f = Notebook(self.window5)
+                self.tab1 = Frame(self.f)
+                self.f.add(self.tab1,text=self.link_s.get())
+                self.f.pack(fill='both',expand=True)
+                self.check_tab = True
+                menu = Menu(self.window5)
+                filemenu = Menu(menu,tearoff=0)
+                filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.Hacker_2)
+                filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
+                menu.add_cascade(label='Option',menu=filemenu)
+                self.window5.config(menu=menu)
+                try:
+                  self.frame = tkinterweb.HtmlFrame(self.tab1)
+                  self.frame.load_website(self.link_s.get())
+                  self.frame.pack(fill='x',expand=True)
+                  hf = open('history.txt','a')
+                  hf.write(str(self.link_s.get()))
+                  hf.close()
+                except:
+                    showerror(title='Not Found',message='Item Not Found!')
+                    print(False)
+            # self.window5.mainloop()
+        else:
+            if self.check_tab == True:
+                # self.f = Notebook(self.window5)
+                self.tab2 = Frame(self.f)
+                self.f.add(self.tab2,text=self.link_s.get())
+                self.f.pack(fill='both',expand=True)
+                self.frame_2 = tkinterweb.HtmlFrame(self.tab2)
+                self.frame_2.load_website(self.link_s.get())
+                self.frame_2.pack(fill='x',expand=True)
+        self.window5.mainloop()
+    def search(self,event=None):
+        # if self.check_tab == False:
+        if self.link_s.get():
+          if self.check_search_tab == False:
+            self.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+            try:
+                self.frame = tkinterweb.HtmlFrame(self.main_tab)
+                self.frame.load_website(self.link_s.get())
+                self.frame.pack(fill='x',expand=True)
+                self.back_b_2 = Button(self.main_tab,text='Back',command=self.back_link)
+                self.back_b_2.place(bordermode=OUTSIDE,x=10,y=5)
+                self.next_b_2 = Button(self.main_tab,text='Next',command=self.next_link)
+                self.next_b_2.place(bordermode=OUTSIDE,x=50,y=5)  
+                hf = open('history.txt','a')
+                hf.write(f'{self.link_s.get()}\n')
+                hf.close()
+                self.check_search_tab = True
+            except:
+                    showerror(title='Not Found',message='Item Not Found!')
+                    print(False)
+            # self.window5.mainloop()
+          else:
+                    self.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+                    # self.f = Notebook(self)
+                    self.check_tab = True
+                    try:
+                       self.frame.destroy()
+                       self.frame = tkinterweb.HtmlFrame(self.main_tab)
+                       self.frame.load_website(self.link_s.get())
+                       self.frame.pack(fill='x',expand=True)
+                       self.back_b_2 = Button(self.main_tab,text='Back',command=self.back_link)
+                       self.back_b_2.place(bordermode=OUTSIDE,x=10,y=5)
+                       self.next_b_2 = Button(self.main_tab,text='Next',command=self.next_link)
+                       self.next_b_2.place(bordermode=OUTSIDE,x=50,y=5)
+                       self.check_search_tab = True
+                       hf = open('history.txt','a')
+                       hf.write(f'{self.link_s.get()}\n')
+                       hf.close()
+                    except:
+                        showerror(title='Not Found',message='Item Not Found!')
+                        print(False)
+        # else:
+        #     if self.check_tab == True:
+        #         # self.f = Notebook(self.window5)
+        #         self.tab2 = Frame(self.f)
+        #         self.f.add(self.tab2,text=self.link_s.get())
+        #         self.f.pack(fill='both',expand=True)
+        #         self.frame_2 = tkinterweb.HtmlFrame(self.tab2)
+        #         self.frame_2.load_website(self.link_s.get())
+        #         self.frame_2.pack(fill='x',expand=True)
+    def search_2(self,x):
+        if self.check_tab == False:
+            if self.link_s.get():
+                self.window5 = Tk()
+                self.window5.title('Hacker webbrowser')
+                self.window5.geometry("700x500")
+                self.window5.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+                self.f = Notebook(self.window5)
+                self.tab1 = Frame(self.f)
+                self.f.add(self.tab1,text=self.link_s.get())
+                self.f.pack(fill='both',expand=True)
+                self.check_tab = True
+                menu = Menu(self.window5)
+                filemenu = Menu(menu,tearoff=0)
+                filemenu.add_command(label='Hacker',accelerator='Alt+F3',command=self.Hacker_2)
+                filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
+                menu.add_cascade(label='Option',menu=filemenu)
+                self.window5.config(menu=menu)
+                try:
+                  self.frame = tkinterweb.HtmlFrame(self.tab1)
+                  self.frame.load_website(self.link_s.get())
+                  self.frame.pack(fill='x',expand=True)
+                  hf = open('history.txt','a')
+                  hf.write(str(self.link_s.get()))
+                  hf.close()
+                except:
+                    showerror(title='Not Found',message='Item Not Found!')
+                    print(False)
+            # self.window5.mainloop()
+        else:
+            if self.check_tab == True:
+                # self.f = Notebook(self.window5)
+                self.tab2 = Frame(self.f)
+                self.f.add(self.tab2,text=self.link_s.get())
+                self.f.pack(fill='both',expand=True)
+                self.frame_2 = tkinterweb.HtmlFrame(self.tab2)
+                self.frame_2.load_website(self.link_s.get())
+                self.frame_2.pack(fill='x',expand=True)
+        self.window5.mainloop()
+    # def new_tab(self):
+    #     self.f.destroy()
+    #     self.f = Notebook(self.window5)
+    #     self.tab1 = Frame(self.f)
+    #     self.f.add(self.tab1,text='Untitled')
+    #     self.f.pack(fill='both',expand=True)
+    def ext7(self):
+        self.window5.destroy()
+        self.window5.quit()
+    def Hacker_translate(self):
+        global txt_word_tr,word,source,target,window_translate
+        window_translate = Tk()
+        # window_translate = Tk()
+        # window_translate = Tk()
+        window_translate.title('Hacker Translate')
+        # style_window_tr = Style("superhero")
+        # window_translate = style_window_tr.master
+        menu = Menu(window_translate)
+        aboutfile = Menu(window_translate,tearoff=0)
+        aboutfile.add_command(label='Hacker',command=self.Hacker)
+        aboutfile.add_command(label='Dev',command=self.dev)
+        aboutfile.add_separator()
+        aboutfile.add_command(label='Close',accelerator='Ctrl+F4',command=self.ext8)
+        menu.add_cascade(label='About',menu=aboutfile)
+        window_translate.config(menu=menu)
+        window_translate.geometry("600x500")
+        window_translate.resizable(0,0)
+        label_word = Label(window_translate,text='Word:',background='gray14',foreground='white')
+        label_word.place(bordermode=INSIDE,x=200,y=13)
+        label_target = Label(window_translate,text='Source:',background='gray14',foreground='white')
+        label_target.place(bordermode=INSIDE,x=200,y=45)
+        label_source = Label(window_translate,text='Target:',background='gray14',foreground='gray14')
+        label_source.place(bordermode=INSIDE,x=200,y=75)
+        word = Entry(window_translate,borderwidth=3)
+        word.place(bordermode=OUTSIDE,x=270,y=15)
+        source = Entry(window_translate)
+        source.place(bordermode=OUTSIDE,x=270,y=45)
+        target = Entry(window_translate)
+        target.place(bordermode=OUTSIDE,x=270,y=75)
+        txt_word_tr = Text(window_translate,width=30,height=6)
+        txt_word_tr.place(bordermode=OUTSIDE,x=205,y=110)
+        txt_word_tr['state'] = 'disabled'
+        self.translate_b = Button(window_translate,text='Translate',background='gray14',foreground='white',width=9,height=3,command=self.translate)
+        self.translate_b.place(bordermode=OUTSIDE,x=280,y=220)
+        self.exit_b = Button(window_translate,text='Exit',background='gray14',foreground='white',width=9,height=3,command=self.ext8)
+        self.exit_b.place(bordermode=OUTSIDE,x=280,y=280)
+        clear_b = Button(window_translate,text='Clear',background='gray14',foreground='white',command=self.clear_input_tr)
+        clear_b.place(bordermode=OUTSIDE,x=400,y=11)
+        window_translate.config(background='gray17')
+        window_translate.mainloop()
+    def clear_input_tr(self):
+        word.delete(0,END)
+        source.delete(0,END)
+        target.delete(0,END)
+    def search_7(self):
+        window10 = Tk()
+        window10.title('Hacker-Webbrowser/black-Software')
+        self.frame_3 = tkinterweb.HtmlFrame(window10)
+        self.frame_3.load_website('https://black-software.ir')
+        self.frame_3.pack(fill='both',expand=True)
+        window10.mainloop()
+    def translate(self):
+        txt_word_tr['state'] = 'normal'
+        tr = GoogleTranslator(source=source.get(),target=target.get()).translate(word.get())
+        txt_word_tr.insert(END,f'{tr}\n')
+        txt_word_tr['state'] = 'disabled'
+        self.exit_b.destroy()
+        clear_b = Button(window_translate,text='Clear',bg='white',fg='black',command=self.clear_txt,width=9,height=3)
+        clear_b.place(bordermode=OUTSIDE,x=280,y=280)
+        exit_b = Button(window_translate,text='Exit',bg='white',fg='black',width=9,height=3,command=self.ext8)
+        exit_b.place(bordermode=OUTSIDE,x=280,y=340)
+    def clear_txt(self):
+        global txt_word_tr
+        txt_word_tr.destroy()
+        txt_word_tr = Text(window_translate,width=30,height=6)
+        txt_word_tr.place(bordermode=OUTSIDE,x=205,y=110)
+        txt_word_tr['state'] = 'disabled'
+        word.delete(0,END)
+        source.delete(0,END)
+        target.delete(0,END)
+    def ext8(self):
+        window_translate.destroy()
+        window_translate.quit()
+    def close_tab(self):
+        self.tab1.destroy()
+    def speed_internet(self):
+        sp = Speedtest()
+        if platform.system() == 'Windows':
+            try:
+               command = subprocess.getoutput("Netsh int tcp show global");print(command)
+               command2 = subprocess.getoutput("Netsh int tcp set chimney=enabled");print(command2)
+               command3 = subprocess.getoutput("Netsh int tcp set global autotuninglevel=normal");print(command3)
+               command4 = subprocess.getoutput("Netsh int set global congestionprovider=ctcp");print(command4)
+               command5 = subprocess.getoutput("speed up the internet by resetting DNS cache");print(command5)
+               command6 = subprocess.getoutput("speed up internet by resetting Winsock and tcp ip");print(command6)
+               print(True)
+               showinfo(title='Internet Speed',message=f'Your Speed: \nDownload: {sp.download}\nUpload: {sp.upload}')
+            except subprocess.SubprocessError:
+                print(False)
+                showerror(title='Error',message='Speed Error')
+                
+        else:
+            return # Linux
+    def customize(self):
+        color = askcolor(title='Choose Color')
+        self.config(bg=color[1])
+    def google(self):
+        global window2,link_3
+        window2 = Tk()
+        window2.title('Hacker-Webbrowser/Find-')
+        window2.resizable(False,False)
+        window2.geometry("250x300")
+        label_l = Label(window2,text='Search:',bg='gray',fg='black')
+        label_l.place(bordermode=INSIDE,x=3,y=30)
+        link_3 = Entry(window2,width=25)
+        link_3.place(bordermode=INSIDE,x=45,y=30)
+        search_b_2 = Button(window2,text='Search',command=self.search_3,width=9,height=3)
+        search_b_2.place(bordermode=OUTSIDE,x=85,y=65)
+        exit = Button(window2,text='Exit',command=self.ext3,width=9,height=3)
+        exit.place(bordermode=OUTSIDE,x=85,y=125)
+
+        window2.config(bg='gray')
+        window2.mainloop()
+    def bing(self):
+        global window3,link_4
+        window3 = Tk()
+        window3.title('Hacker-Webbrowser/Find-Bing')
+        window3.resizable(False,False)
+        window3.geometry("250x300")
+        label_l = Label(window3,text='Search:',bg='gray',fg='black')
+        label_l.place(bordermode=INSIDE,x=3,y=30)
+        link_4 = Entry(window3,width=25)
+        link_4.place(bordermode=INSIDE,x=45,y=30)
+        search_b_2 = Button(window3,text='Search',command=self.search_4,width=9,height=3)
+        search_b_2.place(bordermode=OUTSIDE,x=85,y=65)
+        exit = Button(window3,text='Exit',command=self.ext4,width=9,height=3)
+        exit.place(bordermode=OUTSIDE,x=85,y=125)
+        window3.config(bg='gray')
+        window3.mainloop()
+    def search_4(self):
+        webbrowser.open_new_tab(f'https://www.bing.com/search?q{link_4.get()}')
+    def ext4(self):
+        window3.destroy()
+        window3.quit()
+
+    def find(self):
+        global window,link_2
+        window = Tk()
+        window.title('Hacker-Webbrowser/Find')
+        window.resizable(False,False)
+        window.geometry("250x300")
+        label_l = Label(window,text='Search:',bg='gray',fg='black')
+        label_l.place(bordermode=INSIDE,x=1,y=30)
+        link_2 = Entry(window,width=25)
+        link_2.place(bordermode=INSIDE,x=45,y=30)
+        search_b_2 = Button(window,text='search',command=self.search_2,width=9,height=3)
+        search_b_2.place(bordermode=OUTSIDE,x=85,y=65)
+        exit = Button(window,text='Exit',command=self.ext2,width=9,height=3)
+        exit.place(bordermode=OUTSIDE,x=85,y=125)
+        window.bind("<Return>",lambda x: self.search_8(x))
+        window.config(bg='gray')
+        window.mainloop()
+    def ext3(self):
+        window2.destroy()
+        window2.quit()
+
+    def ext2(self):
+        window.destroy()
+        window.quit()
+
+    def search_2(self):
+        if link_2.get():
+            self.window13 = Tk()
+            self.window13.title('Hacker webbrowser')
+            self.window13.geometry("700x500")
+            self.window13.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+            self.f = Notebook(self.window13)
+            self.tab1 = Frame(self.f)
+            self.f.add(self.tab1,text=link_2.get())
+            self.f.pack(fill='both',expand=True)
+            self.check_tab = True
+            menu = Menu(self.window13)
+            filemenu = Menu(menu,tearoff=0)
+            filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.Hacker_2)
+            filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
+            menu.add_cascade(label='Option',menu=filemenu)
+            self.window13.config(menu=menu)
+            try:
+                self.frame = tkinterweb.HtmlFrame(self.tab1)
+                self.frame.load_website(link_2.get())
+                self.frame.pack(fill='x',expand=True)
+                hf = open('history.txt','a')
+                hf.write(str(self.link_s.get()))
+                hf.close()
+                self.window13.mainloop()
+            except:
+                showerror(title='Not Found',message='Item Not Found!')
+                print(False)
+    def search_8(self,x):
+        if link_2.get():
+            self.window13 = Tk()
+            self.window13.title('Hacker webbrowser')
+            self.window13.geometry("700x500")
+            self.window13.bind("<Alt-F3>",lambda x: self.Hacker_3(x))
+            self.f = Notebook(self.window13)
+            self.tab1 = Frame(self.f)
+            self.f.add(self.tab1,text=link_2.get())
+            self.f.pack(fill='both',expand=True)
+            self.check_tab = True
+            menu = Menu(self.window13)
+            filemenu = Menu(menu,tearoff=0)
+            filemenu.add_command(label='Black',accelerator='Alt+F3',command=self.Hacker_2)
+            filemenu.add_command(label='Exit',accelerator='Alt+F4',command=self.ext7)
+            menu.add_cascade(label='Option',menu=filemenu)
+            self.window13.config(menu=menu)
+            try:
+                self.frame = tkinterweb.HtmlFrame(self.tab1)
+                self.frame.load_website(link_2.get())
+                self.frame.pack(fill='x',expand=True)
+                hf = open('history.txt','a')
+                hf.write(str(self.link_s.get()))
+                hf.close()
+                self.window13.mainloop()
+            except:
+                showerror(title='Not Found',message='Item Not Found!')
+                print(False)
+    def search_3(self):
+        webbrowser.open_new_tab(f'https://www.google.com/search?q={link_3.get()}')
+    def cut_text(self):
+        self.link_s.event_generate(("<<Cut>>"))
+    def copy_text(self):
+        self.link_s.event_generate(("<<Copy>>"))
+    def paste_text(self):
+        self.link_s.event_generate(("<<Paste>>"))
+    def reload(self):
+        self.link_s.event_generate(("<<Reload>>"))
+    def delete_text(self):
+        self.link_s.event_generate(("<<delete>>"))
+    def Hacker(self,event=None):
+        window_Hacker = Tk()
+        window_Hacker.title('Hacker Webbrowser')
+        window_Hacker.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_Hacker)
+        frame_dev.load_website('https://black-software.ir')
+        frame_dev.pack(fill='both',expand=True)
+        window_Hacker.mainloop()
+    def help(self):
+        window_help = Tk()
+        window_help.title('Hacker Webbrowser')
+        window_help.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_help)
+        frame_dev.load_website('https://github.com/black-software-com/black-help')
+        frame_dev.pack(fill='both',expand=True)
+        window_help.mainloop()
+    def dev(self):
+        window_dev = Tk()
+        window_dev.title('Hacker Webbrowser')
+        window_dev.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_dev)
+        frame_dev.load_website('https://github.com/mrprogrammer2938')
+        frame_dev.pack(fill='both',expand=True)
+        window_dev.mainloop()
+    def context_cmenu(self,event):
+        try:
+            cmenu.tk_popup(event.x_root, event.y_root)
+        finally:
+            cmenu.grab_release()
+    def ext(self):
+        self.destroy()
+        self.quit()
+        quit()
+    @staticmethod
+    def cls():
+        if platform.system() == 'Linux':
+            os.system("clear")
+        else:
+            os.system("cls")
+    @staticmethod
+    def title_b():
+        if platform.system() == 'Linux':
+            os.system("printf '\033]2;Hacker-Webbrowser\a'")
+        else:
+            os.system("title Hacker-Webbrowser")
+    def try_again(self):
+        try1 = input("\nDo You Want To Try again? [y/n] ")
+        if try1.lower() == 'y' or try1.lower() == 'yes':
+            self.shell()
+        elif try1.lower() == 'n' or try1.lower() == 'no':
+            self.ext6()
+        else:
+            self.try_again()
+    def request_web(self):
+        global window11,link_7
+        window11 = Tk()
+        window11.title('Hacker Webbrowser')
+        window11.geometry("300x300")
+        window11.config(background='gray')
+        label_host = TLabel(window11,text='URL:',foreground='black',background='gray')
+        label_host.place(bordermode=INSIDE,x=25,y=25)
+        link_7 = Entry(window11,width=25)
+        link_7.place(bordermode=INSIDE,x=80,y=25)
+        scan_b = Button(window11,text='Scan',command=self.request_url,width=9,height=3)
+        scan_b.place(bordermode=OUTSIDE,x=120,y=70)
+        exit_b_2 = Button(window11,text='Exit',command=self.ext5,width=9,height=3)
+        exit_b_2.place(bordermode=OUTSIDE,x=120,y=130)
+        window11.mainloop()
+    def request_url(self):
+        rq = requests.get(link_7.get())
+        showinfo(title='Request',message=f'{rq}')
+    def ext9(self):
+        window11.destroy()
+        window11.quit()
+    def try_again_2(self):
+        try2 = input("\nDo You Want To Try Again? [y/n] ")
+        if try2.lower() == 'y' or try2.lower() == 'yes':
+            self.search_shell()
+        elif try2.lower() == 'n' or try2.lower() == 'no':
+            self.try_again_3()
+        else:
+            self.try_again_2()
+    def try_again_3(self):
+        try3 = input("\nDo You Want to Back Main Menu? [y/n] ")
+        if try3.lower() == 'y' or try3.lower() == 'yes':
+            self.shell()
+        elif try3.lower() == 'n' or try3.lower() == 'no':
+            self.ext6()
+        else:
+            self.try_again_3()
+    def donate(self,event=None):
+        window_help = Tk()
+        window_help.title('Hacker Webbrowser')
+        window_help.geometry("600x500")
+        frame_dev = tkinterweb.HtmlFrame(window_help)
+        frame_dev.load_website('https://idpay.ir/mrprogrammer2938')
+        frame_dev.pack(fill='both',expand=True)
+        window_help.mainloop()
+if __name__ == '__main__':
+    try:
+        r = requests.get('https://google.com')
+        if r.status_code == 200:
+             if platform.system() == 'Linux':
+               if os.getuid() == 0:
+                  window = Hacker_webbrowser()
+                  window.title_b()
+                  window.cls()
+                  print(window.time_zone)
+                  window.main()
+               else:
+                   showerror(title='Cannot Running',message='Please, Run Hacker Webbrowser as self!')
+             else:
+                  window = Hacker_webbrowser()
+                  window.title_b()
+                  window.cls()
+                  print(window.time_zone)
+                  window.main()
+    except requests.ConnectTimeout:
+        showwarning(title='Cannot Connecting',message='Please, check Internet')
+        print(False)
