@@ -9,9 +9,9 @@ try:
 except ImportError:
     subprocess.getoutput("pip update tk-tools")
 
-class hacker_webbrowser(Tk):
+class black_webbrowser(Tk):
     def __init__(self):
-        super(hacker_webbrowser,self).__init__()
+        super(black_webbrowser,self).__init__()
         self.title('Hacker-Webbrowser/Update')
         self.style = Style("cyborg")
         label_l = Label(self,text='Hacker-Webbrowser',background='white',foreground='black',font=("None",15))
@@ -48,8 +48,8 @@ class hacker_webbrowser(Tk):
 if __name__ == '__main__':
     if platform.system() == 'Linux':
         if os.getuid() == 0:
-          window = hacker_webbrowser()
+          window = black_webbrowser()
         else:
             showerror(title='Cannot Running',message='Please, Check Root!')
     else:
-        window = hacker_webbrowser()
+        window = black_webbrowser()
