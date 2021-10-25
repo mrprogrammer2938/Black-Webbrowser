@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Black-Webbrowser v1.0
+# Black-Webbrowser v1.5
 import os,subprocess
 try:
     from tkinter import *
@@ -8,13 +8,13 @@ try:
 except ImportError:
     subprocess.getoutput("pip install tk-tools")
 
-class hacker_webbrowser(Tk):
+class black_webbrowser(Tk):
     def __init__(self):
-        super(hacker_webbrowser,self).__init__()
-        self.title('Hacker-Webbrowser/Installing')
+        super(black_webbrowser,self).__init__()
+        self.title('black-Webbrowser/Installing')
         self.photo = PhotoImage(file = './Scr/black.png')
         self.style = Style("cyborg")
-        label_l = Label(self,text='Hacker-Webbrowser',background='white',foreground='black',font=("None",15))
+        label_l = Label(self,text='black-Webbrowser',background='white',foreground='black',font=("None",15))
         label_l.place(bordermode=INSIDE,x=120,y=20)
         self.install_b = Button(self,text='Install',width=9,command=self.install)
         self.install_b.place(bordermode=OUTSIDE,x=160,y=110)
@@ -46,4 +46,4 @@ class hacker_webbrowser(Tk):
         self.quit()
         quit()
 if __name__ == '__main__':
-    window = hacker_webbrowser()
+    window = black_webbrowser()
