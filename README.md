@@ -35,9 +35,6 @@ python black <URL>
 ```
 <br>
 
-#### [Black-Software](https://black-software.ir)
-<br>
-
 ### Update
 **Update**
 ``` sh
@@ -51,3 +48,10 @@ python update.py
 ``` sh
 python uninstall.py
 ```
+
+#### [Black-Software](https://black-software.ir)
+
+#### [Instagram](https://instagram.com/black_software_company)
+
+#### [Black](https://github.com/mrprogrammer2938/Black-Webbrowser)
+<br>
