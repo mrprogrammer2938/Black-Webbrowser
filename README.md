@@ -12,7 +12,11 @@ cd Black-Webbrowser
 
 bash install.sh
 
-python black.py
+python black
 ```
 <br>
+
+#### [Black-Software](https://black-software.ir)
+<br>
+
 
