@@ -11,12 +11,30 @@ git clone https://github.com/black-software-com/Black-Webbrowser
 cd Black-Webbrowser
 
 bash install.sh
+```
+<br>
 
-python black
+**Run**
+``` sh
+python black 
+or
+python black <URL>
 ```
 <br>
 
 #### [Black-Software](https://black-software.ir)
 <br>
 
+### Update
+**Update**
+``` sh
+cd /Update
 
+python update.py
+
+```
+
+**Uninstalling**
+``` sh
+python uninstall.py
+```
