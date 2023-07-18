@@ -24,6 +24,3 @@
 #### [Black](https://github.com/mrprogrammer2938/Black-Webbrowser)
 <br>
 
-## Black-Webbrowser v2.0 (New Version): [Link](https://github.com/black-software-com/black-webbrowser) 🌍
-<br>
-
