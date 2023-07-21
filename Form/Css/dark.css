@@ -1,0 +1,32 @@
+QMainWindow {
+    background-color: rgb(98,98,98);    
+}
+QLabel {
+        color: #fff;
+}
+QToolBar {
+    background-color: rgb(85, 85, 85);    
+    border: 3px solid rgb(85, 85, 85);
+    border-radius: 5px;
+}
+QToolButton {
+    color: #fff;
+}
+QToolButton:hover {
+    color: #000;
+}
+QStatusBar {
+    color: #fff;    
+}
+
+QMenuBar {
+    color: #fff;
+    background-color: rgb(85,85,85);
+}
+QMenu {
+    background-color: rgb(85,85,85);
+    color: #fff;
+}
+QDialog QLabel {
+    color: #000;    
+}
