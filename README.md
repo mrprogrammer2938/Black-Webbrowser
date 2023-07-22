@@ -3,11 +3,11 @@
 
 <hr>
 
-<center>
+<p align="center">
 
 [![Black-Webbrowser Logo](./Icon/black-webbrowser-icon.png "Black Webbrowser")](https://github.com/mrprogrammer2938/black-webbrowser)
 
-</center><br>
+</p><br>
 
 ``` txt
 ____  _            _     __          __  _     _                                     
