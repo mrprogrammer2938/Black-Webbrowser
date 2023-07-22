@@ -329,11 +329,10 @@ QLineEdit:hover {
             self.browser.setUrl(q)
             
         
-        """
         f = open("./Data/history.txt","a")
         f.write(f"{str(self.line.text())}\n")
         f.close()
-        """
+        
     def search(self,link):
         self.browser.setUrl(QUrl(str(link)))
     def update_title(self):
@@ -406,7 +405,7 @@ Source: https://github.com/mrprogrammer2938/black-webbrowser
         
         rev = dlg.exec_()
     def license_(self):
-        license_text = open("LICENSE.txt","r").read()
+        license_text = open("LICENSE","r").read()
         dlg = QDialog(self)
         dlg.setWindowTitle("Black-Webbrowser/َLicense")
         dlg.setGeometry(800,200,700,500)
