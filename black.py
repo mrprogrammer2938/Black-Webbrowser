@@ -1,529 +1,450 @@
 #!/usr/bin/python3
-# Made By Sina Meysami (Black-Software)
-# Black-Webbrowser v2.0
+# Made By Sina Meysami
+# Black-Notepad v1.0
 #
+
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5.uic import loadUi
-from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtPrintSupport import *
-from colorama import Fore,Back,Style
-import sys,platform,os,datetime,webbrowser,qdarktheme
+import qdarktheme
+import qtmodern.styles
+import qtmodern.windows
+import sys,platform
 
-
-black_webbrowser_version = "Black-Webbrowser v2.0"
-help_arg = """
-Black-Webbrowser v2.0 Argument:
-    
-    --help = help
-    --url <URL> = Open Website
-    --version = Version
-    --start = start
-
-"""
-css_code = """
-"""
-banner = f"""{Fore.GREEN}  ____  _            _     __          __  _     _                                     
- |  _ \| |          | |    \ \        / / | |   | |                                     {Fore.RED}v2.0{Fore.GREEN}
- | |_) | | __ _  ___| | __  \ \  /\  / /__| |__ | |__  _ __ _____      _____  ___ _ __ 
- |  _ <| |/ _` |/ __| |/ /   \ \/  \/ / _ \ '_ \| '_ \| '__/ _ \ \ /\ / / __|/ _ \ '__|
- | |_) | | (_| | (__|   <     \  /\  /  __/ |_) | |_) | | | (_) \ V  V /\__ \  __/ |   
- |____/|_|\__,_|\___|_|\_\     \/  \/ \___|_.__/|_.__/|_|  \___/ \_/\_/ |___/\___|_|   
-                                                                                    {Fore.WHITE}                                                                                      
-"""
-width = 1200
+width = 1000
 height = 700
+
+
 class Window(QMainWindow):
-    count = 0
     def __init__(self):
-        super(Window,self).__init__()
-        
-        self.start_banner()
-        self.Main()
-    def start_banner(self):
-        self.title()
-        self.cls()
-        time = datetime.datetime.now()
-        time = time.strftime("%Y/%m/%d %H:%M:%S")
-        print(banner)
-        print(f"{Fore.GREEN}Start Black-Webbrowser v2.0{Fore.WHITE}\n")
-        print(f"{Fore.WHITE}Start At: {Fore.GREEN}{time}{Fore.WHITE}\n\n")
-    def title(self):
-        if platform.system() == "Windows":
-            os.system("title Black-Webbrowser")
-        elif platform.system() == "Linux" or platform.system() == "Darwin":
-            os.system("xtitle Black-Webbrowser")
-        else:
-            sys.exit()
-    def cls(self):
-        if platform.system() == "Windows":
-            os.system("cls")
-        elif platform.system() == "Linux" or platform.system() == "Darwin":
-            os.system("clear")
-        else:
-            sys.exit()
-    def Main(self):
-
-        self.home_url = open("./Data/home_page.txt","r").read()
-        #self.setStyleSheet(css_code)
-        self.setWindowTitle("Black-Webbrowser")
-        self.setWindowIcon(QIcon("./Icon/black-webbrowser-icon.ico"))
-        self.setGeometry(500,150,width,height)
-        
-        #self.setFixedSize(width,height)
-        self.tab = QTabWidget(self)
-        self.tab.setDocumentMode(True)
-        self.tab.setTabsClosable(True)
-        self.tab.currentChanged.connect(self.current_tab)
-        self.tab.tabCloseRequested.connect(self.close_tab)
-        self.setCentralWidget(self.tab)
-        menu = QMenuBar(self)
-        self.setMenuBar(menu)
-        self.menu_file = menu.addMenu("&Menu")
-        self.menu_file.addAction("New Tab",self.new_tab)
-        self.menu_file.addAction("New Window",self.new_window)
-        self.menu_file.addSeparator()
-        self.menu_file.addAction("History",self.history)
-        #self.history_menu = self.menu_file.addMenu("History")
-        #self.menu_file.addAction("Downloads",self.downloads)
-        self.menu_file.addAction("Bookmarks",self.bookmark)
-        self.menu_file.addSeparator()
-        self.help_menu = self.menu_file.addMenu("Help")
-
-        self.setting_menu = self.menu_file.addMenu("Setting")
-        self.menu_file.addSeparator()
-        self.menu_file.addAction("Quit",self.close)
-        self.theme_menu = self.setting_menu.addMenu("Theme")
-        self.theme_menu.addAction("Light",self.light)
-        self.theme_menu.addAction("Dark",self.dark)
-        self.theme_menu.addAction("Matrix",self.matrix)
-        self.window_size = self.setting_menu.addMenu("View")
-        self.window_size.addAction("Fullscreen",self.showFullScreen)
-        self.window_size.addAction("Normal",self.showNormal)
-        self.window_size.addAction("Minimize",self.showMinimized)
-        self.setting_menu.addAction("Setting",self.setting)
-        self.help_menu.addAction("Help",self.help_)
-        self.help_menu.addAction("About",self.about)
-        self.help_menu.addSeparator()
-        self.help_menu.addAction("License",self.license_)
-        self.help_menu.addAction("Send Feedback",self.send_feedback)
-        
-        self.setMenuBar(menu)
-        
-        toolbar = QToolBar("Menu")
-        toolbar.setMovable(False)
-        self.addToolBar(toolbar)
-        back_action = QAction("Back",self)
-        back_action.setToolTip("Back Page")
-        back_action.triggered.connect(lambda: self.tab.currentWidget().back())
-        toolbar.addAction(back_action)
-        forward_action = QAction("Forward",self)
-        forward_action.setToolTip("Forward Page")
-        forward_action.triggered.connect(lambda: self.tab.currentWidget().forward())
-        toolbar.addAction(forward_action)
-        reload_action = QAction("Reload",self)
-        reload_action.setToolTip("Reload Page")
-        reload_action.triggered.connect(lambda: self.tab.currentWidget().reload())
-        toolbar.addAction(reload_action)
-        home_action = QAction("Home",self)
-        home_action.setToolTip("Home Page")
-        home_action.triggered.connect(self.home)
-        toolbar.addAction(home_action)
-        
-        
-        self.line = QLineEdit(self)
-        self.line.setPlaceholderText("Search Or Type URL...")
-        self.line.setClearButtonEnabled(True)
-        self.line.setDragEnabled(True)
-        self.line.setStyleSheet("""
-QLineEdit {
-    border: 3px solid lightgray;
-    border-radius: 5px;    
-}
-QLineEdit:hover {
-    border-color: #3333ff;    
-}
-""")
-        self.line.returnPressed.connect(self.search_link)
-        toolbar.addWidget(self.line)
-        stop_action = QAction("Stop",self)
-        stop_action.triggered.connect(lambda: self.tab.currentWidget().stop())
-        stop_action.setToolTip("Stop")
-        toolbar.addAction(stop_action)
-        star_action = QAction("Star",self)
-        star_action.setToolTip("Star")
-        star_action.triggered.connect(self.star)
-        
-        toolbar.addAction(star_action)
-        
-        #self.get_history()
-        self.key_shortcut()
-        
-        self.set_status()
-        theme_f = open("./Data/theme.txt","r").read()
-        if theme_f == "light":
-            self.light()
-        elif theme_f == "dark":
-            self.dark()
-        elif theme_f == "matrix":
-            self.matrix()
-        print(f"Theme: {theme_f}")
-        self.new_tab()
-    def new_tab(self): 
-        qurl = QUrl(self.home_url)
-        self.browser = QWebEngineView()
-        i = self.tab.addTab(self.browser,"Blank")
-        self.browser.setUrl(qurl)
-        self.tab.setCurrentIndex(i)
-        self.browser.urlChanged.connect(lambda qurl=qurl,browser=self.browser: self.url_change(qurl,browser))
-        self.browser.loadFinished.connect(lambda _,i=i,browser=self.browser: self.tab.setTabText(i,browser.page().title()))
-        Window.count = Window.count + 1
-    def url_change(self,qurl,browser=None):
-        if browser != self.tab.currentWidget():
-            return
-        self.line.setText(qurl.toString())
-        self.line.setCursorPosition(0)
-    def star(self):
-        
-        star_ = self.line.text()
-        f = open("./Data/bookmark.txt","a")
-        f.write(f"{str(star_)}\n")
-        f.close()
-    def print_page(self):
-        pass
-    """
-    def get_history(self):
-        
-        history_file = open("./Data/history.txt","r")
-        for i in range(10):
-            for self.link in history_file.readlines():
-                print(self.link)
-                self.history_menu.addAction(self.link,lambda: self.search_history(self.link))
-                
-    def search_history(self,link):
-        print(link)
-        #self.browser.setUrl(QUrl(str(self.link)))"""
-    def light(self):
-        qdarktheme.setup_theme("light")
-        theme_f = open("./Data/theme.txt","w")
-        theme_f.write("light")
-        theme_f.close()
-        css_f = open("./Form/Css/light.css","r").read()
-        self.setStyleSheet(css_f)
-
-    def dark(self):
+        QMainWindow.__init__(self)
         qdarktheme.setup_theme("dark")
-        theme_f = open("./Data/theme.txt","w")
-        theme_f.write("dark")
-        theme_f.close()
-        css_f = open("./Form/Css/dark.css","r").read()
-        self.setStyleSheet(css_f)
-    def matrix(self):
-        theme_f = open("./Data/theme.txt","w")
-        theme_f.write("matrix")
-        theme_f.close()
-        css_f = open("./Form/Css/matrix.css","r").read()
-        self.setStyleSheet(css_f)
-    def setting(self):
+        self.file = False
+        self.file_path = ""
+        self.n_line = True
+        self.setWindowTitle("Notepad - New File")
+        self.setWindowIcon(QIcon("black-notepad-icon.ico"))
+        self.setGeometry(500,150,width,height)
+    
         
-        dlg = QDialog(self)
-        loadUi("./Form/setting-ui.ui",dlg)
-        dlg.themes.addItems(["Light","Dark","Matrix"])
-        dlg.themes.currentIndexChanged.connect(self.selectionchange)
-        dlg.font_btn.clicked.connect(self.set_font)
-        dlg.license_btn.clicked.connect(self.license_)
-        dlg.open_data_btn.clicked.connect(self.open_data)
-        dlg.history_btn.clicked.connect(self.history)
-        #dlg.download_btn.clicked.connect(self.downloads)
-        dlg.bookmark_btn.clicked.connect(self.bookmark)
-        dlg.source_btn.clicked.connect(self.source)
-        dlg.about_btn.clicked.connect(self.about)
-        dlg.help_btn.clicked.connect(self.help_)
-        dlg.exit_btn.clicked.connect(dlg.close)
-        dlg.send_feedback.clicked.connect(self.send_feedback)
-        user = open("./Data/username.txt","r").read()
-        dlg.user_line.setText(user)
-        dlg.home_line.setText(self.home_url)
-        dlg.ok_p_btn.clicked.connect(self.change_home_url)
-        self.home_line = dlg.home_line
+        font = QFont()
+        font.setFamily("Arial")
+        font.setPointSize(14)
         
-        self.user_name = dlg.user_line
-        dlg.ok_p_btn_2.clicked.connect(self.save_user)
+        self.text = QTextEdit(self)
+        self.text.setFont(font)
+        self.setCentralWidget(self.text)
+        self.set_theme()
+        self.key_shortcut()
+        self.menu()
         
-        dlg.instagram_btn.clicked.connect(lambda: self.browser.setUrl(QUrl("https://instagram.com/sina.coder")))
-        dlg.twitter_btn.clicked.connect(lambda: self.browser.setUrl(QUrl("https://twitter.com/Sinameysami")))
-        dlg.facebook_btn.clicked.connect(lambda: self.browser.setUrl(QUrl("https://instagram.com/Sinameysami")))
-        dlg.github_btn.clicked.connect(lambda: self.browser.setUrl(QUrl("https://github.com/mrprogrammer2938")))
-        dlg.telegram_btn.clicked.connect(lambda: self.browser.setUrl(QUrl("https://instagram.com/sina_pythonn")))
-        dlg.send_emailbtn.clicked.connect(lambda: self.browser.setUrl(QUrl("mailto:mrprogrammer2938@gmail.com")))
-        dlg.fullscreen_btn.clicked.connect(self.showFullScreen)
-        dlg.normal_btn.clicked.connect(self.showNormal)
-        dlg.minimize_btn.clicked.connect(self.showMinimized)
+    def menu(self):
+        self.menu_ = self.menuBar()
+        self.file = self.menu_.addMenu("&File")
+        self.edit = self.menu_.addMenu("&Edit")
+        self.font = self.menu_.addMenu("&Font")
+        self.theme = self.menu_.addMenu("&Theme")
+        self.view = self.menu_.addMenu("&View")
+        self.help = self.menu_.addMenu("&Help")
         
-        rev = dlg.exec_()
-    def save_user(self):
-        f = open("./Data/username.txt","w")
-        f.write(self.user_name.text())
-        f.close()
-        f2 = open("./Data/username.txt","r").read().strip()
-        self.user_name.setText(f2)
-    def change_home_url(self):
+        self.file.addAction(QIcon("new_file.png"),"New File",self.new_file)
+        self.file.addAction(QIcon("open_file.png"),"Open File",self.open_file)
+        self.file.addAction(QIcon("save_file.png"),"Save File",self.save_file)
+        self.file.addAction(QIcon("save_as.jpg"),"Save As",self.save_as)
+        self.file.addAction(QIcon("star.png"),"Star",self.star_file)
+        self.file.addAction(QIcon("bookmark.png"),"Bookmark",self.bookmark)
+        self.file.addSeparator()
+        self.file.addAction(QIcon("printer.ico"),"Print",self.print_dialog)
+        self.file.addSeparator()
+        self.file.addAction(QIcon("exit_icon.png"),"&Exit",self.close)
+        self.font.addAction("Set Font",self.font_dialog)
+        self.font.addAction("Set Font Size",self.font_size)
+        self.font.addAction("Set Font Color",self.font_color)
+        self.theme.addAction("Light",self.light)
+        self.theme.addAction("Dark",self.dark)
+        self.theme.addAction("Matrix",self.matrix)
+        self.theme.addAction("Sky",self.sky)
+        self.theme.addAction("Bee",self.bee)
         
-        self.home_url = self.home_line.text()
-        f = open("./Data/home_page.txt","w")
-        f.write(self.home_url)
-        f.close()
+        self.edit.addAction("Undo",self.text.undo)
+        self.edit.addAction("Redo",self.text.redo)
+        self.edit.addSeparator()
+        self.edit.addAction("Cut",self.text.cut)
+        self.edit.addAction("Copy",self.copy_text)
+        self.edit.addAction("Paste",self.text.paste)
+        self.edit.addSeparator()
+        self.edit.addAction("Select All",self.text.selectAll)
+        self.edit.addAction("Clear All",self.text.clear)
+        self.view.addAction("Fullscreen",self.showFullScreen)
+        self.view.addAction("Normal",self.showNormal)
+        self.view.addAction("Minimize",self.showMinimized)
+        self.help.addAction("Help",self.help_)
+        self.help.addAction("About",self.about_)
+        self.help.addAction("Donate",self.donate)
+        self.help.addSeparator()
+        self.help.addAction("Send Feedback",self.send_feedback)
+        self.statusbar_()
+        self.set_toolbar()
         
-    def open_data(self):
-        path_now = os.getcwd()
-        webbrowser.open(f"{path_now}\\Data")
-    def set_font(self):
-        font,i = QFontDialog().getFont()
-        if i:
-            self.line.setFont(font)
-            self.browser.setFont(font)
-    def selectionchange(self,i):
-        if i == 0:
-            self.light()
-        elif i == 1:
-            self.dark()
-        elif i == 2:
-            self.matrix()
-    def history(self):
-        h_win = QMainWindow(self)
-        h_win.setWindowTitle("Black-Webbrowser/History")
-        h_win.setGeometry(1300,150,400,700)
-        h_win.setFixedSize(400,700)
-        
-        menu = QMenuBar(h_win)
-        h_win.setMenuBar(menu)
-        options = menu.addMenu("Options")
-        options.addAction("Clear Data",self.clear_history)
-        options.addSeparator()
-        options.addAction("Exit",h_win.close)
-        
-        h_list = QListWidget(h_win)
-        h_list.itemDoubleClicked.connect(self.search_history)
-        h_win.setCentralWidget(h_list)
-        h_list.setFont(QFont("Arial",13))
-        f = open("./Data/history.txt","r").readlines()
-        for item in f:
-            h_list.addItem(item.strip())
-        
-        self.h_list = h_list
-        h_win.show()
-        
-    def clear_history(self):
-        self.h_list.clear()
-        f = open("./Data/history.txt","w")
-        f.write("")
-        f.close()
-    # def downloads(self):
-    #     dlg = QDialog(self)
-    #     dlg.setWindowTitle("Black-Webbrowser/Downloads")
-    #     dlg.setGeometry(1300,150,400,700)
-    #     dlg.setFixedSize(400,700)
-    #     text = QTextEdit(dlg)
-    #     text.resize(400,700)
-    #     text.setReadOnly(True)
-    #     text.setFont(QFont("Arial",13))
-    #     f = open("./Data/download.txt","r").read()
-    #     text.setText(f)
+    def key_shortcut(self):
+        exit_key = QShortcut(QKeySequence("Ctrl+Q"),self)
+        exit_key.activated.connect(self.close)
+        exit_key_2 = QShortcut(QKeySequence("Ctrl+E"),self)
+        exit_key_2.activated.connect(self.close)
+        open_key = QShortcut(QKeySequence("Ctrl+O"),self)
+        open_key.activated.connect(self.open_file)
+        save_key = QShortcut(QKeySequence("Ctrl+S"),self)
+        save_key.activated.connect(self.save_file)
+        save_as_key = QShortcut(QKeySequence("Ctrl+Shift+S"),self)
+        save_as_key.activated.connect(self.save_as)
+        help_key = QShortcut(QKeySequence("Ctrl+H"),self)
+        help_key.activated.connect(self.help_)
+        bookmark_key = QShortcut(QKeySequence("Ctrl+B"),self)
+        bookmark_key.activated.connect(self.bookmark)
         
         
-    #     rev = dlg.exec_()
+    def set_toolbar(self):
+        tools = QToolBar()
+        tools.setMovable(False)
+        self.addToolBar(tools)
+        tools.addAction(QIcon("new_file.png"),"New File",self.new_file)
+        tools.addAction(QIcon("open_file.png"),"Open File",self.open_file)
+        tools.addAction(QIcon("save_file.png"),"Save File",self.save_file)
+        tools.addAction(QIcon("save_as.jpg"),"Save As",self.save_as)
+        tools.addAction(QIcon("star.png"),"Star",self.star_file)
+        tools.addAction(QIcon("help_icon.png"),"Help",self.help_)
+        tools.addAction(QIcon("exit_icon.png"),"Exit",self.close)
+    def undo(self):
+        self.text.undo()
+    def redo(self):
+        self.text.redo()
+    def copy(self):
+        self.text.copy()
+    def paste(self):
+        self.text.paste()
+    def cut(self):
+        self.text.cut()
+    def star_file(self):
+        try:
+            if self.n_line == True:
+                file_path = self.file_path
+                if file_path != "" and file_path != " ":
+                    file = open(f"bookmark.txt","a")
+                    file.write(f"{file_path}")
+                    file.close()
+                    self.n_line = False
+                    print(True)
+                else:
+                    pass
+            else:
+                    file_path = self.file_path
+                    if file_path != "" and file_path != " ":
+                        file = open(f"bookmark.txt","a")
+                        file.write(f"\n{file_path}")
+                        file.close()
+                        print(False)
+                    else:
+                        pass
+        except:
+            pass
     def bookmark(self):
-        book_win = QMainWindow(self)
-        book_win.setWindowTitle("Black-Webbrowser/Bookmarks")
-        book_win.setGeometry(1300,150,400,700)
-        book_win.setFixedSize(400,700)
-        menu = QMenuBar(book_win)
-        book_win.setMenuBar(menu)
-        options = menu.addMenu("Options")
-        options.addAction("Clear Data",self.clear_bookmark)
-        options.addSeparator()
-        options.addAction("Exit",book_win.close)
-        book_list = QListWidget(book_win)
-        book_win.setCentralWidget(book_list)
-        book_list.setFont(QFont("Arial",13))
-        book_list.itemDoubleClicked.connect(self.search_book)
-        f = open("./Data/bookmark.txt","r").readlines()
-        for item in f:
-            book_list.addItem(item.strip())
-        self.book_list = book_list
-        book_win.show()
-    def search_book(self,item):
-        link = item.text()
-        self.tab.currentWidget().setUrl(QUrl(link))
-    def clear_bookmark(self):
-        self.book_list.clear()
-        f = open("./Data/bookmark.txt","w")
-        f.write("")
-        f.close()
-        
-    def new_window(self):
-        win = Window()
-        win.show()
-    def search_link(self):
-        q = QUrl(f"{self.home_url}/search?q={self.line.text()}")
-        q2 = QUrl(self.line.text())
-        if q2.scheme() == "https" or q2.scheme() == "http":
-            self.browser.setUrl(q2)
-        else:
-            self.browser.setUrl(q)
+        try:
+            dlg = QMainWindow(self)
+            dlg.setWindowTitle("Black-Notepad/Bookmarks")
+            dlg.setWindowIcon(QIcon("black-notepad-icon.ico"))
+            dlg.setGeometry(700,300,500,400)
+            dlg.setFixedSize(500,400)
+            self.mylist = QListWidget(dlg)
+            self.mylist.resize(500,380)
+            self.mylist.itemDoubleClicked.connect(self.open_file_list)
+            dlg.setCentralWidget(self.mylist)
+            file = open("bookmark.txt","r").readlines()
+            for item in file:
+                item = item.strip()
+                self.mylist.addItem(item)
             
         
-        f = open("./Data/history.txt","a",encoding="utf-8")
-        f.write(f"{str(self.line.text())}\n")
-        f.close()
+            menu = QMenuBar(dlg)
+            dlg.setMenuBar(menu)
+            options = menu.addMenu("Options")
+            options.addAction("Clear All",self.clear_bookmark)
+            options.addSeparator()
+            options.addAction("Close",dlg.close)
         
-    def search_history(self,item):
-        link = item.text()
-        self.tab.currentWidget().setUrl(QUrl(link.strip()))
-    def current_tab(self,i):
-        qurl = self.tab.currentWidget().url()
-        self.url_change(qurl,self.tab.currentWidget())
-        self.update_title()
-        
-
-    def update_title(self):
-        title = self.tab.currentWidget().page().title()
-        self.setWindowTitle(f"Black-Webbrowser - {title}")
-        
-    def home(self):
-        self.browser.setUrl(QUrl(self.home_url))
-        
+            dlg.show()
+        except (Exception,) as err:
+            print(err)
+            pass
+    def open_file_list(self,item):
+       item_ = item.text()
+       file_text = open(item_,"r").read()
+       self.text.setText(file_text)
+    def clear_bookmark(self):
+        file = open("bookmark.txt","w")
+        file.write("")
+        file.close()
+        self.mylist.clear()
+        self.n_line = True
+    def new_file(self):
+        self.text.clear()
+        self.file = False
+        self.file_path = ""
+        self.setWindowTitle("Notepad - nodocument")
     
-    def key_shortcut(self):
-        new_tab = QShortcut(QKeySequence("Ctrl+N"),self)
-        new_tab.activated.connect(self.new_tab)
-        exit_key = QShortcut(QKeySequence("Ctrl+Q"), self)
-        exit_key.activated.connect(self.close)
-        exit_key2 = QShortcut(QKeySequence("Ctrl+E"), self)
-        exit_key2.activated.connect(self.close)
-        forward_key = QShortcut(QKeySequence("Ctrl+F"), self)
-        forward_key.activated.connect(lambda: self.tab.currentWidget().forward())
-        back_key = QShortcut(QKeySequence("Ctrl+B"), self)
-        back_key.activated.connect(lambda: self.tab.currentWidget().back())
-        reload_key = QShortcut(QKeySequence("Ctrl+R"), self)
-        reload_key.activated.connect(lambda: self.tab.currentWidget().reload())
-        history_key = QShortcut(QKeySequence("Ctrl+H"), self)
-        history_key.activated.connect(self.history)
-        # downloads_key = QShortcut(QKeySequence("Ctrl+D"), self)
-        # downloads_key.activated.connect(self.downloads)
-        about_key = QShortcut(QKeySequence("Ctrl+A"), self)
-        about_key.activated.connect(self.about)
-    def close_tab(self,i):
-        if self.tab.count() < 2:
-            return
-        self.tab.removeTab(i)
-
+    def open_file(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(self,"Open File", "","All Files (*)", options=options)
+        self.file_path = fileName
+        self.setWindowTitle(f"Notepad - {self.file_path}")
+        if self.file_path != "":
+            self.file = True
+        if fileName:
+            f = open(fileName,"r",encoding="UTF-8").read()
+            self.text.setText(f)
+    
+    def save_file(self):
+        if self.file == True:
+            try:
+                file = open(self.file_path,'w',encoding="UTF-8")
+                text = self.text.toPlainText()
+                file.write(text)
+            except:
+                pass
+        else:
+            try:
+                
+                name = QFileDialog.getSaveFileName(self, 'Save File')
+                self.file_path = name[0]
+                self.setWindowTitle(f"Notepad - {name[0]}")
+                file = open(self.file_path,'w',encoding="UTF-8")
+                text = self.text.toPlainText()
+                file.write(text)
+            
+                file.close()
+                if self.file_path != "":
+                    self.file = True
+            except (Exception,FileNotFoundError,):
+                self.file = False
+    def save_as(self):
+        try:
+            name = QFileDialog.getSaveFileName(self, 'Save As')
+            self.setWindowTitle(f"Notepad - {name[0]}")
+                
+            file = open(name[0],'w',encoding="UTF-8")
+            text = self.text.toPlainText()
+            file.write(text)
+            file.close()
+            
+            if name[0] != "":
+                self.file = True
+        except (Exception,FileNotFoundError,):
+            self.file = False
+    def print_dialog(self):
+        printer = QPrinter(QPrinter.HighResolution)
+        print_dlg = QPrintPreviewDialog(printer,self)
+        print_dlg.paintRequested.connect(self.print_preview)
+        print_dlg.exec_()
+    def print_preview(self,printer):
+        self.text.print_(printer)
     def help_(self):
-        help_text = """Black-Webbrowser v2.0
-Ctrl+N = Open New Window
-Ctrl+H = History
-Ctrl+A = About
-Ctrl+R = Refresh (Reload Page)
-Ctrl+F = Forward
-Ctrl+B = Back
-Ctrl+Q = Quit
-Ctrl+E = Quit
+        width = 500
+        height = 400
+        text = """Developer: Sina Meysami
+Version: v1.0
+Ctrl + Q = QUIT
+Ctrl + E = QUIT
+Ctrl + P = Print
+Ctrl + O = Open File
+Ctrl + S = Save File
+Ctrl + Shift + S = Save As
+Ctrl + H = Help
+Ctrl + B = Bookmark
 """
-        dlg = QDialog(self)
-        dlg.setWindowTitle("Black-Webbrowser/Help")
-        dlg.setGeometry(800,200,500,500)
-        dlg.setFixedSize(500,500)
-        text = QTextEdit(dlg)
-        text.resize(500,500)
-        text.setReadOnly(True)
-        text.setFont(QFont("Arial",13))
-        text.setText(help_text)
+        dlg = QDialog()
+        dlg.setWindowTitle("Black-Notepad/Help")
+        dlg.setWindowIcon(QIcon("black-notepad-icon.ico"))
         
+        dlg.setGeometry(600,300,width,height)
+        t = QTextEdit(dlg)
+        t.setReadOnly(True)
+        t.setText(text)
+        t.resize(width,height)
         
-        rev = dlg.exec_()
-    def about(self):
-        about_text = """Developer: Sina Meysami
-Version v2.0
-Source: https://github.com/mrprogrammer2938/black-webbrowser
-"""
-        dlg = QDialog(self)
-        dlg.setWindowTitle("Black-Webbrowser/َAbout")
-        dlg.setGeometry(800,200,500,500)
-        dlg.setFixedSize(500,500)
-        text = QTextEdit(dlg)
-        text.resize(500,500)
-        text.setReadOnly(True)
-        text.setFont(QFont("Arial",13))
-        text.setText(about_text)
-        
-        
-        rev = dlg.exec_()
-    def license_(self):
-        license_text = open("LICENSE.txt","r").read()
-        dlg = QDialog(self)
-        dlg.setWindowTitle("Black-Webbrowser/َLicense")
-        dlg.setGeometry(800,200,700,500)
-        dlg.setFixedSize(700,500)
-        text = QTextEdit(dlg)
-        text.resize(700,500)
-        text.setReadOnly(True)
-        text.setFont(QFont("Arial",13))
-        text.setText(license_text)
-        text.selectAll()
-        text.setAlignment(Qt.AlignCenter)
-        
-        rev = dlg.exec_()
-    def send_feedback(self):
-        self.browser.setUrl(QUrl("https://github.com/mrprogrammer2938/Black-Webbrowser/issues"))
-    def set_status(self):
-        x = 100
-        for i in range(x):
-            status = QStatusBar(self)
-            status.setStyleSheet("color: #000;")
-            status.showMessage("Black-Webbrowser v1.0")
-            self.setStatusBar(status)
-            x += 100 
-    def source(self):
-        webbrowser.open_new_tab("https://github.com/mrprogrammer2938/black-webbrowser")
-        
-    
-        
-def main():
-    username = open("./Data/username.txt","r").read()
-    
-    # Black-Webbrowser v1.0
-    app = QApplication(sys.argv)
-    app.setApplicationName("Black-Webbrowser")
-    app.setApplicationDisplayName(username)
-    app.setApplicationVersion("v2.0")
-    window = Window()
-    window.show()
+        font = QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        t.setFont(font)
+        res = dlg.exec_()
+    def about_(self):
+        width = 500
+        height = 400
+        text = """Developer: Sina Meysami
+Version: v1.0
 
+Instagram: https://instagram.com/sina.coder
+Telegram: https://t.me/sina_python
+Twitter: https://twitter.com/Sinameysami
+Github: https://github.com/mrprogrammer2938
+Weblog: sinameysami.blogfa.com
+"""
+        dlg = QDialog()
+        dlg.setWindowTitle("Black-Notepad/About")
+        dlg.setWindowIcon(QIcon("black-notepad-icon.ico"))
+        dlg.setGeometry(600,300,width,height)
+        t = QTextEdit(dlg)
+        t.setReadOnly(True)
+        t.setText(text)
+        t.resize(width,height)
+        
+        font = QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        t.setFont(font)
+        res = dlg.exec_()
+        
+    def donate(self):
+        #webbrowser.open_new_tab("https://google.com")
+        pass
+    def send_feedback(self):
+        #webbrowser.open_new_tab("")
+        pass
+    def font_dialog(self):
+        font,ok = QFontDialog.getFont()
+        if ok:
+            self.text.setFont(font)
+            
+    def font_size(self):
+        dlg = QDialog()
+        dlg.setWindowTitle("Set Font Size")
+        dlg.setWindowIcon(QIcon("black-notepad-icon.ico"))
+        dlg.setFixedSize(122,64)
+        
+        self.spinbox = QSpinBox(dlg)
+        self.spinbox.resize(121,22)
+        self.spinbox.setMinimum(0)
+        self.spinbox.setMaximum(72)
+        self.spinbox.valueChanged.connect(self.set_font_size)
+        
+        set_btn = QPushButton("Set",dlg)
+        set_btn.setGeometry(0,20,121,24)
+        set_btn.clicked.connect(self.set_font_size)
+        
+        close_btn = QPushButton("Close",dlg)
+        close_btn.setGeometry(0,40,121,24)
+        close_btn.clicked.connect(dlg.close)
+        
+        rev = dlg.exec_()
+    def set_font_size(self):
+        self.text.selectAll()
+        self.text.setFontPointSize(self.spinbox.value())
+    def font_color(self):
+        font_color = QColorDialog().getColor()
+        self.text.selectAll()
+        self.text.setTextColor(font_color)
+    # ----- Theme -----
+    def set_theme(self):
+        f = open("theme.txt","r").read()
+        if f == "light":
+            self.light()
+        elif f == "dark":
+            self.dark()
+        elif f == "matrix":
+            self.matrix()
+        elif f == "sky":
+            self.sky()
+        elif f == "bee":
+            self.bee()
+    def light(self):
+        qtmodern.styles.light(QApplication.instance())   
+        self.text.setStyleSheet("""
+QTextEdit {
+    color: #000;
+    background-color: #fff;
+    
+}
+                                
+""")                     
+        f = open("theme.txt","w")
+        f.write("light")
+        f.close()
+    def dark(self):
+        qtmodern.styles.dark(QApplication.instance())
+        self.text.setStyleSheet("""
+QTextEdit {
+    color: white;
+    background-color: black;
+    
+}
+                                
+""")
+        f = open("theme.txt","w")
+        f.write("dark")
+        f.close()
+    def matrix(self):
+        qtmodern.styles.dark(QApplication.instance()) 
+        self.text.setStyleSheet("""
+QTextEdit {
+    color: lightgreen;
+    background-color: black;    
+        
+}
+                                
+""")
+        f = open("theme.txt","w")
+        f.write("matrix")
+        f.close()
+    def sky(self):
+        qtmodern.styles.light(QApplication.instance()) 
+        self.text.setStyleSheet("""
+QTextEdit {
+    color: lightblue;
+    background-color: blue;
+    
+}
+                                
+""")
+        f = open("theme.txt","w")
+        f.write("sky")
+        f.close()
+    def bee(self):
+        qtmodern.styles.dark(QApplication.instance()) 
+        self.text.setStyleSheet("""
+QTextEdit {
+    color: yellow;
+    background-color: #000;    
+}                          
+""")
+        f = open("theme.txt","w")
+        f.write("bee")
+        f.close()
+    def copy_text(self):
+        self.text.selectAll()
+        self.text.copy()
+    def statusbar_(self):
+        status = QStatusBar(self)
+        status.showMessage(f"Black-Notepad  {self.file_path}")
+        self.setStatusBar(status)
+    def get_error(self):
+        error = QErrorMessage(self)
+        error.showMessage("Error, Please Try Again!")
+        error.show()
+def main():
+    app = QApplication(sys.argv)
+    app.setApplicationName("Black-Notepad")
+    app.setApplicationDisplayName("Black-Software")
+    app.setApplicationVersion("v1.0")
+    win = Window()
+    win.show()
     sys.exit(app.exec_())
     
-def argument():
-    try:
-        if sys.argv[1] == "--start" or sys.argv[1] == "start":
-            main()
-        if sys.argv[1] == "--url" or sys.argv[1] == "url":
-            url = sys.argv[2]
-            webbrowser.open_new_tab(str(url))
-        if sys.argv[1] == "--help" or sys.argv[1] == "help":
-            print(help_arg)
-        if sys.argv[1] == "--version" or sys.argv[1] == "version":
-            print(black_webbrowser_version)   
-    except (IndexError):
-        main()
-        
-    
+
 if __name__ == "__main__":
-    # Black-Webbrowser v2.0
+    # Black Notepad v2.0
     if platform.system() == "Windows" or platform.system() == "Linux" or platform.system() == "Darwin":
-        argument()
-        
+        main()
     else:
-        print("Please, Run This Program At Windows, Linux Or MacOS!")
+        print("Sorry Please Run This App On Windows,Linux Or Mac OS!")
         sys.exit()
-        
