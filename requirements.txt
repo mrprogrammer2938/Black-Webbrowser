@@ -1,4 +1,5 @@
 PyQt5
 PyQtWebEngine
+pyqt-custom-titlebar-window
 Colorama
 pyqtdarktheme
