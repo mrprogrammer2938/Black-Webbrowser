@@ -9,7 +9,6 @@ from PyQt5.QtGui import *
 from PyQt5.uic import loadUi
 from PyQt5.QtWebEngineWidgets import *
 from colorama import Fore,Back,Style
-from pyqt_custom_titlebar_window import CustomTitlebarWindow
 import sys,platform,os,datetime,webbrowser,qdarktheme
 
 
@@ -498,10 +497,7 @@ def main():
     app.setApplicationName("Black-Webbrowser")
     app.setApplicationDisplayName(username)
     app.setApplicationVersion("v2.0")
-    window = CustomTitlebarWindow(Window())
-    window.setGeometry(400,50,width,height)
-    window.setTopTitleBar(title="Black-Webbrowser",icon_filename="./Icon/black-webbrowser-icon.ico")
-    window.setButtons()
+    window = Window()
     window.show()
 
     sys.exit(app.exec_())
